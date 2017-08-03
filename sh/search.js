@@ -53,8 +53,8 @@ module.exports = {
 		};
 
 		//console.log("http://new.soa.digitalpracticespain.com:8001/smarthospitality/cached/hotels/MADRID/"+city);
-		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/cached/hotels/MADRID/"+city, args,function (data, response) {
-			console.log("url:: "+"http://new.soa.digitalpracticespain.com:8001/smarthospitality/cached/hotels/MADRID/"+city);
+		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/hotels/MADRID/"+city, args,function (data, response) {
+			//console.log("url:: "+"http://new.soa.digitalpracticespain.com:8001/smarthospitality/hotels/MADRID/"+city);
 			console.log("DATA:::" +JSON.stringify(data));
 		// console.log("DATA:::" +data);
 		//	var jdata=JSON.parse(data);
