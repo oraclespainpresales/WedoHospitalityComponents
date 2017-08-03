@@ -2,6 +2,7 @@
 
 var log4js = require('log4js');
 var logger = log4js.getLogger();
+var UIBuilder = require('./UIBuilder');
 
 module.exports = {
 
@@ -72,7 +73,21 @@ module.exports = {
 						sdk.reply({text: data2.customer.name+" "+data2.customer.surname+" and document "+data2.customer.documentType+": "+data2.customer.customerId+"."});		
 						sdk.reply({text: data2.customer.address+" "+data2.customer.country+". "});		
 						sdk.reply({text: data2.customer.email+" "+data2.customer.mobile+". "});
-						sdk.reply({text: "It's correct?"});		
+					//	sdk.reply({text: "It's correct?"});		
+					
+						var buttons="Yes,No";
+						buttons = buttons.split(',');
+						var finalBUttons = [];
+						buttons.forEach(function (button) {
+							finalBUttons.push({title: button, payload: button});
+						});
+						
+						var uiBuilder = new UIBuilder(sdk.channelType());
+						var payload = uiBuilder.buildButtons("It's correct?", finalBUttons);
+						sdk.reply(payload);
+
+
+
 						sdk.variable("corrId", corrid);						
 						sdk.variable("user.corrId", corrid);						
 						sdk.variable("documentnumber",data2.customer.customerId);

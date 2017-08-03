@@ -18,7 +18,8 @@ module.exports = {
     }),
 
     invoke: (sdk, done) => {
-        const text = sdk.text();
+       // const text = sdk.text();
+		//console.log("Text: "+text);
 		
 		var canal="";					
 		if (sdk.channelType() == "facebook") {
@@ -38,7 +39,7 @@ module.exports = {
 		var social2 = sdk.variable('profile.lastName');			
 		var social = social1+social2;		*/		
 		var corrId = sdk.variable('corrId');			
-		var comments = sdk.variable('comment');			
+		var comments = sdk.properties().comment;
 		var args = {			
 			data: { "corrId" : corrId, "comments" : comments },
 			headers: { "Content-Type": "application/json", "Accept": "application/json"}

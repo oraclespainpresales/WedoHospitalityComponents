@@ -30,6 +30,9 @@ module.exports = {
  
   //Smart Hospitality - Checkout Flow
   'checkout' : require('./sh/checkout'),
-  'saveFeedback' : require('./sh/saveFeedback')  
+  'saveFeedback' : require('./sh/saveFeedback'),
+  
+  //Helper
+  'assignVariable' : require('./sh/assignVariable')  
   }
 };
