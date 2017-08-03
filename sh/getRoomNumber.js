@@ -107,7 +107,7 @@ module.exports = {
 					sdk.done(true);	
 					done(sdk);					
 				}else{
-					sdk.reply({text: "Currently we can provide you a room number. Please, try again later."});			
+					sdk.reply({text: "Currently we can't provide you a room number. Please, try again later."});			
 					sdk.action('success');        
 					sdk.done(true);	
 					done(sdk);	
