@@ -25,9 +25,9 @@ module.exports = {
 
     invoke: (sdk, done) => {
         const text = sdk.text();
-        logger.info('Show Hotel Details');
+        logger.info('Show Hotel Details '+text);
       	
-		var name = sdk.properties().name.toUpperCase();  
+		var name = text;//sdk.properties().name.toUpperCase();  
 		var city = sdk.properties().city.toUpperCase();  
 		var roomType =sdk.properties().room.toUpperCase();  
 		var nroom =sdk.properties().nroom;  
@@ -66,8 +66,8 @@ module.exports = {
 			headers: { "Content-Type": "application/json" }
 		};
 		
-		console.log("url: http://new.soa.digitalpracticespain.com:8001/smarthospitality/cached/offers/MADRID/"+city+"/"+name.toLowerCase());
-		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/cached/offers/MADRID/"+city+"/"+name.toLowerCase(), args,function (data, response) {
+		console.log("url: http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase());
+		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase(), args,function (data, response) {
 		//var req=client.get("https://a6b48d64.ngrok.io/ibcs/data/"+name+".js", args, function (data, response) {
 		//	console.log("DATA:::" +JSON.stringify(data));
 			//console.log("DATA:::" +data);
@@ -83,7 +83,7 @@ module.exports = {
 			var photos=[];
 			var rates=[];			
 			
-			hotelName=name;
+			hotelName=jdata.name;
 			brand=jdata.brand;
 			address=jdata.address;
 			desc=jdata.description;
