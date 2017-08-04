@@ -51,7 +51,7 @@ module.exports = {
 		
 		
 	
-		sdk.reply({text: "making payment"});	
+		sdk.reply({text: "making payment..."});	
 	
 		var Client = require('node-rest-client').Client;
 		var client = new Client();		

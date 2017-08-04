@@ -185,6 +185,12 @@ module.exports = {
 			
 			var rates = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":ratescarrousel}}};
 			sdk.reply(rates);
+			
+						
+			var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back","payload":"BACK_HOTELS"}]};
+			sdk.reply(quickreply);
+			
+			
 			sdk.action('success');        
 			sdk.done(true);	
 			done(sdk);		
