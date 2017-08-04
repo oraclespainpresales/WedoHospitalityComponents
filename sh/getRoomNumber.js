@@ -100,7 +100,7 @@ module.exports = {
 				//console.log("DATA:::" +response.statusCode);	
 				if ((response.statusCode==200))
 				{
-					sdk.reply({text: social1+ ", it's your room number: "+data.roomid});
+					sdk.reply({text: social1+ ", This is your room number: "+data.roomid});
 					/*if ((data.targetTemperature!=null) && (data.currentTemperature!=null))
 						sdk.reply({text: "Your have done a special request about room temperature. Current: "+data.targetTemperature+"ºC Target: "+data.currentTemperature+"ºC"});			*/
 					sdk.action('success');        

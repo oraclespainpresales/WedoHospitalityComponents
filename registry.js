@@ -33,6 +33,8 @@ module.exports = {
   'saveFeedback' : require('./sh/saveFeedback'),
   
   //Helper
-  'assignVariable' : require('./sh/assignVariable')  
+  'assignVariable' : require('./sh/assignVariable'),
+  'conditionFromLastMessage' : require('./sh/conditionFromLastMessage')  
+  
   }
 };

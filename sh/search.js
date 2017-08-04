@@ -2,6 +2,8 @@
 
 var log4js = require('log4js');
 var logger = log4js.getLogger();
+//var UIBuilder = require('./UIBuilder');
+
 
 module.exports = {
 
@@ -44,7 +46,7 @@ module.exports = {
 		
 		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/hotels/MADRID/"+city, args,function (data, response) {
 			//console.log("url:: "+"http://new.soa.digitalpracticespain.com:8001/smarthospitality/hotels/MADRID/"+city);
-			console.log("DATA:::" +JSON.stringify(data));
+		//	console.log("DATA:::" +JSON.stringify(data));
 		// console.log("DATA:::" +data);
 		//	var jdata=JSON.parse(data);
 			var jdata=data;
@@ -84,12 +86,12 @@ module.exports = {
 						done(sdk);			
 
 				}else{	
-						console.log("jdata:: "+JSON.stringify(jdata));
+						//console.log("jdata:: "+JSON.stringify(jdata));
 						var carrousel = [];						
 						for (var i=0;i<jdata.length;i++)
 						{
 							carrousel[i]={
-								"title":jdata[i].internalname,
+								"title":jdata[i].name,
 								"subtitle":jdata[i].address+" Price from: "+ jdata[i].from.price+"€ ",
 								"image_url": jdata[i].images[0],
 								"buttons":[
@@ -104,6 +106,23 @@ module.exports = {
 					
 						var cardv2 = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":carrousel}}};
 						sdk.reply(cardv2);
+						
+						
+						/*var buttons="Search Again";
+						buttons = buttons.split(',');
+						var finalBUttons = [];
+						buttons.forEach(function (button) {
+							finalBUttons.push({title: button, payload: button});
+						});
+						
+						var uiBuilder = new UIBuilder(sdk.channelType());
+						var payload = uiBuilder.buildButtons("I'm not interested", finalBUttons);
+						sdk.reply(payload);*/
+						
+						
+						var quickreply = {"text":"I'm not sure...","quick_replies":[{"content_type":"text","title":"Search Again","payload":"BACK_SEARCH"}]};
+						sdk.reply(quickreply);
+						
 						
 						sdk.action('success');        
 						sdk.done(true);	
