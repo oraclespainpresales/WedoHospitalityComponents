@@ -15,6 +15,7 @@ module.exports = function(config)
     const log4js = require('log4js');
     logger = log4js.getLogger();
     logger.setLevel('INFO');
+	//logger.setLevel('TRACE');
     log4js.replaceConsole(logger);
   }
 

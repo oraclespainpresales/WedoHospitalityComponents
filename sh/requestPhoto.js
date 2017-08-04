@@ -3,7 +3,7 @@
 var log4js = require('log4js');
 var logger = log4js.getLogger();
 var UIBuilder = require('./UIBuilder');
-
+ 
 
 module.exports = {
 
@@ -58,7 +58,6 @@ module.exports = {
 						var uiBuilder = new UIBuilder(sdk.channelType());
 						var payload = uiBuilder.buildButtons("Let us know when you upload the images.", finalBUttons);
 						sdk.reply(payload);
-
 		
 		
 		sdk.action('success');        
