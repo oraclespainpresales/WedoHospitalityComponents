@@ -2,6 +2,7 @@
 
 var log4js = require('log4js');
 var logger = log4js.getLogger();
+var UIBuilder = require('./UIBuilder');
 
 module.exports = {
 
@@ -44,18 +45,30 @@ module.exports = {
 			logger.info('should not be there...');
 		}
 		       
-        var canal="";					
+        var canal="";	
+		
 		if (sdk.channelType() == "facebook") {
 			console.log("es FACEBOOK");
-			canal="facebook";			
+			canal="facebook";	
+			sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});			
+			var buttons="Yes,No";
+			buttons = buttons.split(',');
+			var finalBUttons = [];
+			buttons.forEach(function (button) {
+				finalBUttons.push({title: button, payload: button});
+			});
+			
+			var uiBuilder = new UIBuilder(sdk.channelType());
+			var payload = uiBuilder.buildButtons("Order now. Are you sure?", finalBUttons);
+			sdk.reply(payload);
 		}
 		else {
 			console.log("es WEBHOOK");
 			canal="webhook";
+			sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});			
 		}
 		
-		sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});			
-					
+							
 		sdk.action('success');        
 		sdk.done(true);	
 		done(sdk);
