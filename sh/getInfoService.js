@@ -8,8 +8,9 @@ module.exports = {
     metadata: () => ({
         "name": "getInfoService",
         "properties": {
-			"customerId": { "type": "string", "required": true },
-			"service": { "type": "string", "required": true}
+			"service": { "type": "string", "required": true},
+			"when": { "type": "date", "required": true},
+			"payment": { "type": "string", "required": true}
         },
         "supportedActions": [
             "success",
@@ -19,12 +20,31 @@ module.exports = {
 
     invoke: (sdk, done) => {
         const text = sdk.text();
-		var customerId = sdk.properties().customerId;  				
-		var service = sdk.properties().service;  				
-        logger.info('getInfoService');
-        
+		var service = sdk.properties().service;
+		var when = sdk.properties().when;
+		var payment = sdk.properties().payment;
 		
-		var canal="";					
+		logger.info('getInfoService........ '+service);
+		if (service!='<not set>')
+		{			
+			if (service.indexOf(';')>0){
+				var splitted =service.split(';');
+				var selected= splitted[0];
+				service = splitted[1];				
+				logger.info('getInfoService1 '+service);
+			}else{
+				logger.info('getInfoService2 '+service);
+			}			
+		}else if (text!=null){
+			logger.info('getInfoService3 '+text);	
+			var splitted =text.split(';');
+			var selected= splitted[0];
+			service = splitted[1];			
+		}else{
+			logger.info('should not be there...');
+		}
+		       
+        var canal="";					
 		if (sdk.channelType() == "facebook") {
 			console.log("es FACEBOOK");
 			canal="facebook";			
@@ -34,7 +54,8 @@ module.exports = {
 			canal="webhook";
 		}
 		
-		sdk.reply({text: "getting info service..."+service});			
+		sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});			
+					
 		sdk.action('success');        
 		sdk.done(true);	
 		done(sdk);

@@ -27,6 +27,7 @@ module.exports = {
   //Smart Hospitality - Get Info Service Flow
   'showServices' : require('./sh/showServices'),
   'getInfoService' : require('./sh/getInfoService'),
+  'getAllAvailableServices' : require('./sh/getAllAvailableServices'),  
  
   //Smart Hospitality - Checkout Flow
   'checkout' : require('./sh/checkout'),
