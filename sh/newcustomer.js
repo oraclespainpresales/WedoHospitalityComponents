@@ -2,6 +2,7 @@
 
 var log4js = require('log4js');
 var logger = log4js.getLogger();
+var FBMessenger = require('fb-messenger');
 
 module.exports = {
 
@@ -80,11 +81,20 @@ module.exports = {
 		
 		var social1 = sdk.variable('profile.firstName');
 		var social2 = sdk.variable('profile.lastName');
+		console.log("sender "+sdk.payload().sender.id);
+		console.log("receptor "+sdk.payload().recipient.id);	   
+	   	var messenger = new FBMessenger('EAAFCo0ZB9MN4BAF3DPAT76WwsTeORmYBZCb7cCvVKlDZBqHOVTNHx7ObdYByMQDY5bTnShmjyceZAcqSSSZCtwjgZBeIoVHwOTWuXrFyB48zNWRwndjZAlrTJJVNydqkK7WRHZB5ky0ZBOnlptyXo1ZAIAbBnbUEBuOp57Q5IFZCzDoDwZDZD', 'REGULAR'); 
+		messenger.sendTextMessage(sdk.payload().sender.id, 'Hello to customer', 'REGULAR', function (err, body)
+	//	messenger.sendTextMessage(sdk.payload().recipient.id, 'Hello to receptor', 'REGULAR', function (err, body)
+		{
+		if (err) return console.error(err)				
+			console.log("body: "+JSON.stringify(body));	
+		});
 		
 		var Client = require('node-rest-client').Client;
 		var client = new Client();		
 		var args = {
-			data: {"corrId":corrId,"customer":{"documentType":type,"customerId":docnumber,"SOCIALID":social1+social2,"name":name,"surname":surname,"age":age,"address":address,"country":nationality, "mobile":customermobile, "email":customeremail},"payments":{"CC":{"number":ccnumber,"expiration":ccexpiration,"ccv":ccccv},"paypal":{"username":"username"}}},
+			data: {"corrId":corrId,"customer":{"documentType":type,"customerId":docnumber,"SOCIALID":social1+social2, "SOCIALINTERNALID":sdk.payload().sender.id, "name":name, "surname":surname,"age":age,"address":address,"country":nationality, "mobile":customermobile, "email":customeremail},"payments":{"CC":{"number":ccnumber,"expiration":ccexpiration,"ccv":ccccv},"paypal":{"username":"username"}}},
 			headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};
 //console.log("cuerpo mensaje:: "+args);			

@@ -2,7 +2,7 @@
 
 var log4js = require('log4js');
 var logger = log4js.getLogger();
-var FBMessenger = require('fb-messenger');
+//var FBMessenger = require('fb-messenger');
 
 module.exports = {
 
@@ -24,15 +24,18 @@ module.exports = {
 		var roomType = sdk.properties().room.toUpperCase();  
 	    logger.info('searching in '+city+" "+roomType);
        	   
-	   
+	/*	console.log("sender "+sdk.payload().sender.id);
+		console.log("receptor "+sdk.payload().recipient.id);	   
 	   	var messenger = new FBMessenger('EAAFCo0ZB9MN4BAF3DPAT76WwsTeORmYBZCb7cCvVKlDZBqHOVTNHx7ObdYByMQDY5bTnShmjyceZAcqSSSZCtwjgZBeIoVHwOTWuXrFyB48zNWRwndjZAlrTJJVNydqkK7WRHZB5ky0ZBOnlptyXo1ZAIAbBnbUEBuOp57Q5IFZCzDoDwZDZD', 'REGULAR'); 
-//		messenger.sendTextMessage(1195608453876307, 'Hello', 'REGULAR', function (err, body)
-		messenger.sendTextMessage(1977093462526832, 'Hello', 'REGULAR', function (err, body)
+		messenger.sendTextMessage(sdk.payload().sender.id, 'Hello to customer', 'REGULAR', function (err, body)
+	//	messenger.sendTextMessage(sdk.payload().recipient.id, 'Hello to receptor', 'REGULAR', function (err, body)
 		{
 		if (err) return console.error(err)				
-		console.log("body: "+JSON.stringify(body));	
+			console.log("body: "+JSON.stringify(body));	
 		});
-	   	   
+	   	   */
+		   
+		   
 	   
 		var canal="";					
 		if (sdk.channelType() == "facebook") {

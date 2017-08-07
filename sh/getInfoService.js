@@ -24,20 +24,24 @@ module.exports = {
 		var service = sdk.properties().service;
 		var when = sdk.properties().when;
 		var payment = sdk.properties().payment;
+		var social1 = sdk.variable('profile.firstName');
+		var social2 = sdk.variable('profile.lastName');		
+		var social = social1+social2;
+		logger.info('getInfoService........ '+service+" "+when+" "+payment);
 		
-		logger.info('getInfoService........ '+service);
+		
 		if (service!='<not set>')
 		{			
 			if (service.indexOf(';')>0){
 				var splitted =service.split(';');
 				var selected= splitted[0];
 				service = splitted[1];				
-				logger.info('getInfoService1 '+service);
+		//		logger.info('getInfoService1 '+service);
 			}else{
-				logger.info('getInfoService2 '+service);
+			//	logger.info('getInfoService2 '+service);
 			}			
 		}else if (text!=null){
-			logger.info('getInfoService3 '+text);	
+		//	logger.info('getInfoService3 '+text);	
 			var splitted =text.split(';');
 			var selected= splitted[0];
 			service = splitted[1];			
@@ -49,29 +53,74 @@ module.exports = {
 		
 		if (sdk.channelType() == "facebook") {
 			console.log("es FACEBOOK");
-			canal="facebook";	
-			sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});			
-			var buttons="Yes,No";
-			buttons = buttons.split(',');
-			var finalBUttons = [];
-			buttons.forEach(function (button) {
-				finalBUttons.push({title: button, payload: button});
+			canal="facebook";				
+			
+			var services = [];				
+			var args = {			
+				headers: { "Content-Type": "application/json" }
+			};
+			var Client = require('node-rest-client').Client;
+			var client = new Client();		
+			
+			var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/services/"+encodeURIComponent(social), args,function (data, response) {			
+				var nservices=data.length;							
+				for (var i=0;i<data.length;i++)
+				{
+					if (data[i].name==service)
+					{
+						//console.log("es el bueno: "+data[i].name);
+						services = data[i];
+					//	console.log("service selected: "+JSON.stringify(services));
+					}
+				}
+				var serviceId = services.id;
+				sdk.variable("serviceId", serviceId);						
+				sdk.reply({"attachment":{"type":"image","payload":{"url":services.images[0]}}});	
+				sdk.reply({text: services.name });
+				sdk.reply({text:  services.description.substr(0, 350)+"..."});
+				sdk.reply({text: services.price+"€ or "+services.wedopoints+" WeDo Points"});
+				//sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});	
+				sdk.reply({text: "Order details:\n"+service+"\nWhen: "+when+"\nCharge: "+payment});	
+				var buttons="Yes,No";
+				buttons = buttons.split(',');
+				var finalBUttons = [];
+				buttons.forEach(function (button) {
+					finalBUttons.push({title: button, payload: button});
+				});
+				
+				var uiBuilder = new UIBuilder(sdk.channelType());
+				var payload = uiBuilder.buildButtons("Order now. Are you sure?", finalBUttons);
+				sdk.reply(payload);				
+				sdk.action('success');        
+				sdk.done(true);	
+				done(sdk);					
+				
+			});
+
+			req.on('requestTimeout', function (req) {
+				console.log('request has expired');
+				req.abort();
+			});
+			 
+			req.on('responseTimeout', function (res) {
+				console.log('response has expired');		 
 			});
 			
-			var uiBuilder = new UIBuilder(sdk.channelType());
-			var payload = uiBuilder.buildButtons("Order now. Are you sure?", finalBUttons);
-			sdk.reply(payload);
-		}
-		else {
+			//it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts 
+			req.on('error', function (err) {
+				console.log('request error', err);
+			});
+									
+		
+		}else {
 			console.log("es WEBHOOK");
 			canal="webhook";
 			sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});			
+			sdk.action('success');        
+			sdk.done(true);	
+			done(sdk);
 		}
 		
-							
-		sdk.action('success');        
-		sdk.done(true);	
-		done(sdk);
 	}
 			
 //	}

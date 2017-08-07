@@ -47,21 +47,20 @@ module.exports = {
 		
 		var Client = require('node-rest-client').Client;
 		var client = new Client();
-			
+		var social1 = sdk.variable('profile.firstName');
+		var social2 = sdk.variable('profile.lastName');		
+		var social = social1+social2;
+	//	social = "JesusBrasero";
+		console.log("social: "+social);
+		
 		if (!isSelected)
 		{			
 			var services = [];				
-			var social1 = sdk.variable('profile.firstName');
-			var social2 = sdk.variable('profile.lastName');		
-			var social = social1+social2;
-			social = "JesusBrasero";
-			console.log("social: "+social);
-			
 			var args = {			
 				headers: { "Content-Type": "application/json" }
 			};
 			
-			var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/services/"+social, args,function (data, response) {			
+			var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/services/"+encodeURIComponent(social), args,function (data, response) {			
 				var nservices=data.length;			
 				console.log("how many: "+nservices);
 				
@@ -72,7 +71,9 @@ module.exports = {
 								var boton="show info. of "+data[i].id;		
 								sdk.reply({text: data[i].name+"\n"+"WeDoPoints: "+ data[i].wedopoints+" \nPrice:"+ data[i].price+"€ ", choices: boton.split(',')});		
 							}										
-
+							sdk.action('success');        
+							sdk.done(true);	
+							done(sdk);
 					}else{
 							var carrousel = [];						
 							for (var i=0;i<data.length;i++)
@@ -97,11 +98,11 @@ module.exports = {
 							
 							var quickreply = {"text":"Really, I don't want to order...","quick_replies":[{"content_type":"text","title":"Not Order","payload":"BACK_SEARCH"}]};
 							sdk.reply(quickreply);
-						
-					}
 							sdk.action('success');        
 							sdk.done(true);	
-							done(sdk);
+							done(sdk);						
+					}
+
 			});
 
 			req.on('requestTimeout', function (req) {
@@ -120,7 +121,6 @@ module.exports = {
 		
 		}else{
 			sdk.reply({text: "Ha seleccionado un servicio: "+selectedService});
-			
 			sdk.action('success');        
 			sdk.done(true);	
 			done(sdk);			
