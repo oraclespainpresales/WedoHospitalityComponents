@@ -28,11 +28,16 @@ module.exports = {
 			var service = sdk.properties().service;
 			var serviceId = sdk.properties().serviceId;
 			var when = sdk.properties().when;
+			var indice = sdk.properties().when.indexOf(",");
+			var fechaServicio = sdk.properties().when.substring(6, indice);
+		//	console.log("fechaServicio: "+fechaServicio);
+			var date = new Date(parseInt(fechaServicio)).toISOString();			
+			console.log("fechaServicio: "+date);
 			var payment = sdk.properties().payment;
 			
 		
 			var args = {
-				data: {"SOCIALID": social, "SERVICEID": serviceId ,"payment": payment, "servicedatetime": "2017-08-02T19:25:56.938Z"},
+				data: {"SOCIALID": social, "SERVICEID": serviceId ,"payment": payment, "servicedatetime": date},
 				headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};		
 			var Client = require('node-rest-client').Client;

@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "MakeOrder",
+        "name": "closeDoor",
         "properties": {
 			"service": { "type": "string", "required": true},
 			"when": { "type": "date", "required": true},
@@ -20,7 +20,7 @@ module.exports = {
 
     invoke: (sdk, done) => {
         const text = sdk.text();		  
-        logger.info('MakeOrder');
+        logger.info('closeDoor');
         
 		
 		var canal="";					
@@ -33,7 +33,7 @@ module.exports = {
 			canal="webhook";
 		}
 		
-		sdk.reply({text: "Make Order..."});			
+		sdk.reply({text: "closeDoor..."});			
 		sdk.action('success');        
 		sdk.done(true);	
 		done(sdk);
