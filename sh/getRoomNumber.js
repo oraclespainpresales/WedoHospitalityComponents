@@ -46,7 +46,7 @@ module.exports = {
 		};
 		
 		//console.log("args:"+JSON.stringify(args));
-		console.log("http://new.proxy.digitalpracticespain.com:9997/ords/pdb1/smarthospitality/stay/search/"+encodeURIComponent(social));
+		//console.log("http://new.proxy.digitalpracticespain.com:9997/ords/pdb1/smarthospitality/stay/search/"+encodeURIComponent(social));
 		var req=client.get("http://new.proxy.digitalpracticespain.com:9997/ords/pdb1/smarthospitality/stay/search/"+encodeURIComponent(social), args,function (data, response) {
 		
 			//	console.log("DATA:::" +JSON.stringify(data));					

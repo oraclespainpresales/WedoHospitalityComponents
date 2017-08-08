@@ -83,14 +83,14 @@ module.exports = {
 		var social2 = sdk.variable('profile.lastName');
 		console.log("sender "+sdk.payload().sender.id);
 		console.log("receptor "+sdk.payload().recipient.id);	   
-	   	var messenger = new FBMessenger('EAAFCo0ZB9MN4BAF3DPAT76WwsTeORmYBZCb7cCvVKlDZBqHOVTNHx7ObdYByMQDY5bTnShmjyceZAcqSSSZCtwjgZBeIoVHwOTWuXrFyB48zNWRwndjZAlrTJJVNydqkK7WRHZB5ky0ZBOnlptyXo1ZAIAbBnbUEBuOp57Q5IFZCzDoDwZDZD', 'REGULAR'); 
+	  /* 	var messenger = new FBMessenger('EAAFCo0ZB9MN4BAF3DPAT76WwsTeORmYBZCb7cCvVKlDZBqHOVTNHx7ObdYByMQDY5bTnShmjyceZAcqSSSZCtwjgZBeIoVHwOTWuXrFyB48zNWRwndjZAlrTJJVNydqkK7WRHZB5ky0ZBOnlptyXo1ZAIAbBnbUEBuOp57Q5IFZCzDoDwZDZD', 'REGULAR'); 
 		messenger.sendTextMessage(sdk.payload().sender.id, 'Hello to customer', 'REGULAR', function (err, body)
 	//	messenger.sendTextMessage(sdk.payload().recipient.id, 'Hello to receptor', 'REGULAR', function (err, body)
 		{
 		if (err) return console.error(err)				
 			console.log("body: "+JSON.stringify(body));	
 		});
-		
+		*/
 		var Client = require('node-rest-client').Client;
 		var client = new Client();		
 		var args = {
