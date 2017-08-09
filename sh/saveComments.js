@@ -59,7 +59,7 @@ module.exports = {
 					done(sdk);
 				}else{
 					sdk.reply({text: "There was an error saving your comments"});		
-					sdk.action('success');        
+					sdk.action('fail');        
 					sdk.done(true);	
 					done(sdk);
 				}

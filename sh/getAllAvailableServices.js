@@ -64,13 +64,18 @@ module.exports = {
 				var nservices=data.length;			
 				console.log("how many: "+nservices);
 				
+				var resultadoServices=JSON.stringify(data);	
+				sdk.variable("resultadoServices", resultadoServices); 
+			
 					if (canal=='webhook')
 					{		
 							for (var i=0;i<data.length;i++)
 							{
-								var boton="show info. of "+data[i].id;		
+								var boton="Detail of "+data[i].name;		
 								sdk.reply({text: data[i].name+"\n"+"WeDoPoints: "+ data[i].wedopoints+" \nPrice:"+ data[i].price+"€ ", choices: boton.split(',')});		
-							}										
+							}	
+							var botones="Not Order";
+							sdk.reply({text: "ouw!! i'm not sure, let me come back later!", choices: botones.split(',')}); 							
 							sdk.action('success');        
 							sdk.done(true);	
 							done(sdk);
@@ -96,7 +101,7 @@ module.exports = {
 							sdk.reply(cardv2);
 							
 							
-							var quickreply = {"text":"Really, I don't want to order...","quick_replies":[{"content_type":"text","title":"Not Order","payload":"BACK_SEARCH"}]};
+							var quickreply = {"text":"ouw!! i'm not sure, let me come back later!","quick_replies":[{"content_type":"text","title":"Not Order","payload":"BACK_SEARCH"}]};
 							sdk.reply(quickreply);
 							sdk.action('success');        
 							sdk.done(true);	

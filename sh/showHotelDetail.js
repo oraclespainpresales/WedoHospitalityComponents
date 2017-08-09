@@ -32,7 +32,7 @@ module.exports = {
 		var city = sdk.properties().city.toUpperCase();  
 		var roomType =sdk.properties().room.toUpperCase();  
 		var nroom =sdk.properties().nroom;  		
-		// esto es un workaround pq no soy capaz de extraer la propiedad de date.		
+		// esto es un workaround pq hay un bug para extraer la propiedad de date.		
 		var indice = sdk.properties().from.indexOf(",");
 		var fromd = sdk.properties().from.substring(6, indice);
 	//	console.log("fromdate:: "+fromd);		

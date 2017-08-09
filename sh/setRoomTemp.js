@@ -34,7 +34,7 @@ module.exports = {
 			canal="webhook";
 		}
 		
-		sdk.reply({text: "setting room temp to..."+roomTemp+" ºC"});			
+		sdk.reply({text: "setting room temperature to..."+roomTemp+" ºC"});			
 		sdk.action('success');        
 		sdk.done(true);	
 		done(sdk);

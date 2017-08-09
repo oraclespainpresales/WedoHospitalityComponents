@@ -24,8 +24,7 @@ module.exports = {
   'openDoor' : require('./sh/openDoor'),  
   'closeDoor' : require('./sh/closeDoor'),
   
-  //Smart Hospitality - Get Info Service Flow
-  'showServices' : require('./sh/showServices'),
+  //Smart Hospitality - Get Info Service Flow  
   'getInfoService' : require('./sh/getInfoService'),
   'getAllAvailableServices' : require('./sh/getAllAvailableServices'),  
   'MakeOrder' : require('./sh/MakeOrder'),  

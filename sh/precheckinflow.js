@@ -75,6 +75,9 @@ module.exports = {
 						sdk.reply({text: data2.customer.email+" "+data2.customer.mobile+". "});
 					//	sdk.reply({text: "It's correct?"});		
 					
+					
+					if (canal=='facebook')
+					{
 						var buttons="Yes,No";
 						buttons = buttons.split(',');
 						var finalBUttons = [];
@@ -85,7 +88,11 @@ module.exports = {
 						var uiBuilder = new UIBuilder(sdk.channelType());
 						var payload = uiBuilder.buildButtons("It's correct?", finalBUttons);
 						sdk.reply(payload);
-
+					}else{
+						var botones="Yes,No";
+						sdk.reply({text: "It's correct?", choices: botones.split(',')});
+					}
+						
 
 
 						sdk.variable("corrId", corrid);						

@@ -49,7 +49,7 @@ module.exports = {
 		
 		var req=client.get("http://new.soa.digitalpracticespain.com/room/"+encodeURIComponent(social), args,function (data, response) {
 		
-			//	console.log("DATA:::" +JSON.stringify(data));					
+				console.log("DATA:::" +JSON.stringify(data));					
 				console.log("DATA:::" +response.statusCode);	
 				if ((response.statusCode==200))
 				{
