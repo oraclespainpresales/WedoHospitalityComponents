@@ -3,6 +3,7 @@
 var log4js = require('log4js');
 var logger = log4js.getLogger();
 //var FBMessenger = require('fb-messenger');
+var UIBuilder = require('./UIBuilder');
 
 module.exports = {
 
@@ -57,10 +58,6 @@ module.exports = {
 		};
 		
 		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/hotels/MADRID/"+city, args,function (data, response) {
-			//console.log("url:: "+"http://new.soa.digitalpracticespain.com:8001/smarthospitality/hotels/MADRID/"+city);
-		//	console.log("DATA:::" +JSON.stringify(data));
-		// console.log("DATA:::" +data);
-		//	var jdata=JSON.parse(data);
 			var jdata=data;
 			var nhotels=0;			
 			if (jdata.length>0)
@@ -80,25 +77,35 @@ module.exports = {
 				
 			}else{
 				sdk.reply({text: "There are no hotels availables in "+city+" "+roomType});						
+				sdk.action('fail');        
+				sdk.done(true);	
+				done(sdk)
 			}
-		
+
+				
+				var resultadoBusqueda=JSON.stringify(jdata);	
+				sdk.variable("searchResult", resultadoBusqueda);			
 		
 				if (canal=='webhook')
-				{		
+				{		var botones=[];
 						for (var i=0;i<jdata.length;i++)
-						{
-							//sdk.reply({text: "Hotel: "+jdata[i].internalname});	
-							var boton="show info. of "+jdata[i].internalname;		
-							sdk.reply({text: "Hotel: "+jdata[i].internalname, choices: boton.split(',')});							
-							sdk.reply({text: "Location: "+ jdata[i].address+" \nPrice from:"+ jdata[i].from.price+"€ "});
+						{						
+							botones[i]=jdata[i].name;
+							sdk.reply({text: "Hotel: "+jdata[i].name+"\nLocation: "+ jdata[i].address+" \nPrice from:"+ jdata[i].from.price+"€ "});
+							//sdk.reply({text: jdata[i].description});
 						}
+						var j = jdata.length;
+						botones[j]="Search Again";
+						sdk.reply({text: "Choose an option", choices: botones});
+						
+						/*var boton="Or search Again";				
+						sdk.reply({text: "I'm not sure...", choices: boton.split(',')});*/
 						
 						sdk.action('success');        
 						sdk.done(true);	
 						done(sdk);			
 
 				}else{	
-						//console.log("jdata:: "+JSON.stringify(jdata));
 						var carrousel = [];						
 						for (var i=0;i<jdata.length;i++)
 						{
@@ -120,20 +127,18 @@ module.exports = {
 						sdk.reply(cardv2);
 						
 						
-						/*var buttons="Search Again";
+						/*var quickreply = {"text":"I'm not sure...","quick_replies":[{"content_type":"text","title":"Search Again","payload":"BACK_SEARCH"}]};
+						sdk.reply(quickreply);*/
+						
+						var buttons="Search Again";
 						buttons = buttons.split(',');
 						var finalBUttons = [];
 						buttons.forEach(function (button) {
-							finalBUttons.push({title: button, payload: button});
+							finalBUttons.push({title: button, payload: 'BACK_SEARCH'});
 						});
-						
 						var uiBuilder = new UIBuilder(sdk.channelType());
-						var payload = uiBuilder.buildButtons("I'm not interested", finalBUttons);
-						sdk.reply(payload);*/
-						
-						
-						var quickreply = {"text":"I'm not sure...","quick_replies":[{"content_type":"text","title":"Search Again","payload":"BACK_SEARCH"}]};
-						sdk.reply(quickreply);
+						var payload = uiBuilder.buildButtons("I'm not sure...", finalBUttons);
+						sdk.reply(payload);
 						
 						
 						sdk.action('success');        

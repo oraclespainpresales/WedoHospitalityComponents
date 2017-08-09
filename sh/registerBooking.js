@@ -14,7 +14,8 @@ module.exports = {
 			"nroom": { "type": "Integer", "required": true },
 			"from": { "type": "date", "required": true },
 			"nights": { "type": "Integer", "required": true },
-			"hotelid": { "type": "string", "required": true }
+			"hotelid": { "type": "string", "required": true },
+			"ratesResult": { "type": "string", "required": true }
         },
         "supportedActions": [
             "askcustomerdata",
@@ -34,20 +35,12 @@ module.exports = {
 		var city = sdk.properties().city.toUpperCase();  
 		var roomType =sdk.properties().room.toUpperCase();  
 		var nroom =sdk.properties().nroom;  
-		//var fromdate =sdk.properties().from; 
-		//let fromdate = new Date(sdk.properties().from).getTime();
-		//console.log("from en register:  "+sdk.properties().from);
 		var indice = sdk.properties().from.indexOf(",");
-		let fromdate = sdk.properties().from.substring(6, indice);
-		//console.log("fromdate:: "+fromdate);
-	
-		
-		
+		let fromdate = sdk.properties().from.substring(6, indice);		
 		var nfromdate = require('date-from-num');
 		console.log(nfromdate(parseFloat(fromdate)));	
 		var realfromdate=nfromdate(parseFloat(fromdate));
 		console.log("nfromdate:: "+realfromdate);
-
 		var nights =sdk.properties().nights; 
 	
 		function addDays(theDate, days) {
@@ -70,18 +63,39 @@ module.exports = {
 		
 		 
 		var social1 = sdk.variable('profile.firstName');
-		var social2 = sdk.variable('profile.lastName');
+		var social2 = sdk.variable('profile.lastName');				
+		var hotelid="";
+		var rateid="";
+		console.log("texto recibido: "+text);
+		if (canal=='facebook')
+		{
+				var seleccion = text.split(' ');
+				hotelid = seleccion[0];
+				rateid = seleccion[1];		
+		}else{
+				hotelid = sdk.properties().hotelid;
+				var ratesResult=JSON.parse(sdk.properties().ratesResult);
+				console.log("ratesResult: "+sdk.properties().ratesResult);
+				var sw=false;
+				var i=0;
+				while ((!sw)&&(i<ratesResult.length))
+				{		
+					console.log("comparison "+i+" --"+ratesResult[i].type+" "+text);
+					if (ratesResult[i].type==text)
+					{
+						rateid=ratesResult[i].id;
+						console.log("saving name as "+rateid);
+						sw=true;
+					}
+					i++;
+				}
+		}
 		
-		
-		
-		var seleccion = text.split(' ');	
-		var hotelid = seleccion[0];
-		var rateid = seleccion[1];	
 	
 		var Client = require('node-rest-client').Client;
 		var client = new Client();		
 		var args = {
-			data: {"DEMOZONE":city, "SOCIALID":social1+social2, "HOTELID" : hotelid, "OFFERID" : rateid, "checkin" : realfromdate, "checkout" : todate, "rooms" : nroom, "comments" : "commentario not implemented"},
+			data: {"DEMOZONE":city, "SOCIALID":social1+social2, "HOTELID" : hotelid, "OFFERID" : rateid, "checkin" : realfromdate, "checkout" : todate, "rooms" : nroom, "comments" : "not defined yet"},
 			headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};
 console.log("cuerpo mensaje:: "+JSON.stringify(args));				
