@@ -30,14 +30,13 @@ module.exports = {
 			var social = social1+social2;		
 			var Client = require('node-rest-client').Client;
 			var client = new Client();		
-			var args = {
-				data: 	 { "SOCIALINTERNALID":sdk.payload().sender.id, "SOCIALID":social},
+			/*var args = {				
 				headers: { "Content-Type": "application/json", "Accept": "application/json"}
-			};
-			var urlPost="";		
-			/*client.post(urlPost, args, function (data, response) {
-				console.log("salida del post: "+JSON.stringify(data));
-			});*/
+			};*/
+			var urlPut="http://new.proxy.digitalpracticespain.com:9997/ords/pdb1/smarthospitality/customer/internalsocialid/"+social+"/"+sdk.payload().sender.id;		
+			client.put(urlPut, function (data, response) {
+				console.log("fin del put");
+			});
 			
 			//sdk.reply({text: "closeDoor..."});			
 			sdk.action('success');        
