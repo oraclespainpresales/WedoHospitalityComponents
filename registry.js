@@ -13,6 +13,7 @@ module.exports = {
   'precheckinflow' : require('./sh/precheckinflow'),
   'requestPhoto' : require('./sh/requestPhoto'),
   'saveComments' : require('./sh/saveComments'),
+  'updateSocialID' : require('./sh/updateSocialID'),
   
   //Smart Hospitality - Room Number Flow
   'getRoomNumber' : require('./sh/getRoomNumber'),
