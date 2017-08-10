@@ -35,9 +35,9 @@ module.exports = {
 				headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};
 			var urlPost="";		
-			client.post(urlPost, args, function (data, response) {
+			/*client.post(urlPost, args, function (data, response) {
 				console.log("salida del post: "+JSON.stringify(data));
-			});
+			});*/
 			
 			//sdk.reply({text: "closeDoor..."});			
 			sdk.action('success');        
