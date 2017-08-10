@@ -7,7 +7,8 @@ module.exports = {
 
     metadata: () => ({
         "name": "updateSocialID",
-        "properties": {					
+        "properties": {	
+			"tipo": { "type": "string", "required": true }		
         },
         "supportedActions": [
             "success",
