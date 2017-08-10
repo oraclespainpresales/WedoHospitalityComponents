@@ -63,7 +63,7 @@ module.exports = {
 		else {
 			console.log("es WEBHOOK");
 			canal="webhook";
-			sender=sdk.payload().userId;
+			sender="";
 			var social1 = name;
 			var social2 = surname;	
 		}

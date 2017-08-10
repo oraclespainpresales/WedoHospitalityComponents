@@ -73,7 +73,9 @@ module.exports = {
 		{
 				var seleccion = text.split(' ');
 				hotelid = seleccion[0];
-				rateid = seleccion[1];		
+				rateid = seleccion[1];	
+				var social=social1+social2;
+				
 		}else{
 				hotelid = sdk.properties().hotelid;
 				var ratesResult=JSON.parse(sdk.properties().ratesResult);
@@ -91,13 +93,14 @@ module.exports = {
 					}
 					i++;
 				}
+				var social=sdk.payload().userId;
 		}
 		
 	
 		var Client = require('node-rest-client').Client;
 		var client = new Client();		
 		var args = {
-			data: {"DEMOZONE":city, "SOCIALID":social1+social2, "HOTELID" : hotelid, "OFFERID" : rateid, "checkin" : realfromdate, "checkout" : todate, "rooms" : nroom, "comments" : "not defined yet"},
+			data: {"DEMOZONE":city, "SOCIALID":social, "HOTELID" : hotelid, "OFFERID" : rateid, "checkin" : realfromdate, "checkout" : todate, "rooms" : nroom, "comments" : "not defined yet"},
 			headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};
 console.log("cuerpo mensaje:: "+JSON.stringify(args));				
