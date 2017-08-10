@@ -7,7 +7,7 @@ module.exports = {
 
     metadata: () => ({
         "name": "updateSocialID",
-        "properties": {			
+        "properties": {					
         },
         "supportedActions": [
             "success",
@@ -30,7 +30,7 @@ module.exports = {
 			var Client = require('node-rest-client').Client;
 			var client = new Client();		
 			var args = {
-				data: 	 { "SOCIALINTERNALID":sdk.payload().sender.id;, "SOCIALID":social},
+				data: 	 { "SOCIALINTERNALID":sdk.payload().sender.id, "SOCIALID":social},
 				headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};
 			var urlPost="";		
