@@ -63,7 +63,9 @@ module.exports = {
 		
 		 
 		var social1 = sdk.variable('profile.firstName');
+		console.log("social1: "+social1);
 		var social2 = sdk.variable('profile.lastName');				
+		console.log("social2: "+social2);
 		var hotelid="";
 		var rateid="";
 		console.log("texto recibido: "+text);

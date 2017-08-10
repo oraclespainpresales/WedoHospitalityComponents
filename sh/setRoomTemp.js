@@ -34,10 +34,41 @@ module.exports = {
 			canal="webhook";
 		}
 		
-		sdk.reply({text: "setting room temperature to..."+roomTemp+" ºC"});			
-		sdk.action('success');        
-		sdk.done(true);	
-		done(sdk);
+	//	sdk.reply({text: "setting room temperature to..."+roomTemp+" degrees"});			
+		
+		var args = {			
+			headers: { "Content-Type": "application/json" }
+		};
+		var Client = require('node-rest-client').Client;
+		var client = new Client();		
+		var social1 = sdk.variable('profile.firstName');
+		var social2 = sdk.variable('profile.lastName');		
+		var social = social1+social2;
+		console.log("http://new.soa.digitalpracticespain.com:8001/admin/gadgets/netatmo/set/"+social+"/"+roomTemp);
+		var req=client.post("http://new.soa.digitalpracticespain.com:8001/admin/gadgets/netatmo/set/"+social+"/"+roomTemp, args,function (data, response){		console.log("data: "+JSON.stringify(data));
+			sdk.reply({text: data.message});		
+			sdk.action('success');        
+			sdk.done(true);	
+			done(sdk);			
+		});
+
+		req.on('requestTimeout', function (req) {
+			console.log('request has expired');
+			req.abort();
+		});
+		 
+		req.on('responseTimeout', function (res) {
+			console.log('response has expired');		 
+		});
+		
+		//it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts 
+		req.on('error', function (err) {
+			console.log('request error', err);
+		});
+		
+		
+		
+	
 	}
 			
 //	}

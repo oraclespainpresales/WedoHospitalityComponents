@@ -46,26 +46,31 @@ module.exports = {
 		var customermobile = sdk.properties().customermobile;
 		var customeremail = sdk.properties().customeremail;
 		
-		console.log("email y movil ::"+customeremail+" "+customermobile);
-		
+		console.log("email y movil ::"+customeremail+" "+customermobile+" name: "+name);
+		console.log("sdk.properties :"+JSON.stringify(sdk.properties()));
 		var corrId = sdk.variable("corrId");
 		var nextAction ="";
 		var canal="";		
 		var sender="";
+		console.log("payload: "+JSON.stringify(sdk.payload()));
 		if (sdk.channelType() == "facebook") {
 			console.log("es FACEBOOK");
 			canal="facebook";			
 			sender=sdk.payload().sender.id;
+			var social1 = sdk.variable('profile.firstName');
+			var social2 = sdk.variable('profile.lastName');
 		}
 		else {
 			console.log("es WEBHOOK");
 			canal="webhook";
-			sender="1111111111";
+			sender=sdk.payload().userId;
+			var social1 = name;
+			var social2 = surname;	
 		}
 		
 		
-		var social1 = sdk.variable('profile.firstName');
-		var social2 = sdk.variable('profile.lastName');
+	//	var social1 = sdk.variable('profile.firstName');
+	//	var social2 = sdk.variable('profile.lastName');
 	//	console.log("sender "+sdk.payload().sender.id);
 	//	console.log("receptor "+sdk.payload().recipient.id);	   
 	  /* 	var messenger = new FBMessenger('EAAFCo0ZB9MN4BAF3DPAT76WwsTeORmYBZCb7cCvVKlDZBqHOVTNHx7ObdYByMQDY5bTnShmjyceZAcqSSSZCtwjgZBeIoVHwOTWuXrFyB48zNWRwndjZAlrTJJVNydqkK7WRHZB5ky0ZBOnlptyXo1ZAIAbBnbUEBuOp57Q5IFZCzDoDwZDZD', 'REGULAR'); 

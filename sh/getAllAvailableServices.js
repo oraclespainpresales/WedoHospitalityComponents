@@ -69,13 +69,19 @@ module.exports = {
 			
 					if (canal=='webhook')
 					{		
+							var arraybotones=[];
 							for (var i=0;i<data.length;i++)
 							{
-								var boton="Detail of "+data[i].name;		
-								sdk.reply({text: data[i].name+"\n"+"WeDoPoints: "+ data[i].wedopoints+" \nPrice:"+ data[i].price+"€ ", choices: boton.split(',')});		
+								//var boton="Detail of "+data[i].name;		
+								//sdk.reply({text: data[i].name+"\n"+"WeDoPoints: "+ data[i].wedopoints+" \nPrice:"+ data[i].price+"€ ", choices: boton.split(',')});		
+								sdk.reply({text: data[i].name+"\n"+"WeDoPoints: "+ data[i].wedopoints+" \nPrice:"+ data[i].price+"€ "});		
+								arraybotones[i]=data[i].name;
 							}	
-							var botones="Not Order";
-							sdk.reply({text: "ouw!! i'm not sure, let me come back later!", choices: botones.split(',')}); 							
+							//var botones="Not Order";
+							//sdk.reply({text: "ouw!! i'm not sure, let me come back later!", choices: botones.split(',')}); 							
+							arraybotones[data.length]="Not Order";
+							sdk.reply({text: "Please choose an option", choices: arraybotones});		
+							
 							sdk.action('success');        
 							sdk.done(true);	
 							done(sdk);

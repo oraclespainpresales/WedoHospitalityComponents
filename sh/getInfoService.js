@@ -42,7 +42,7 @@ module.exports = {
 		
 			console.log("es WEBHOOK");
 			canal="webhook";			
-		
+			
 		}
 		
 		
@@ -130,7 +130,7 @@ module.exports = {
 		
 		}else {
 			console.log("es WEBHOOK");
-			sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});			
+			//sdk.reply({text: "getting info service..."+service+" to get at "+when+". Charge in: "+payment});			
 			////
 				var directo=false;
 				var services = [];
@@ -144,10 +144,10 @@ module.exports = {
 					while ((!sw)&&(i<resultadoServices.length))
 					{		
 						//console.log("comparison "+i+"--"+resultadoServices[i].name+"--"+service.substr(10));
-						if (resultadoServices[i].name==service.substr(10))
+						if (resultadoServices[i].name==service)
 						{
 							//service=resultadoServices[i].id;
-							//console.log("saving service as "+service);
+							//console.log("saving service as "+service+":::::"+JSON.stringify(resultadoServices[i]));
 							services=resultadoServices[i];
 							sw=true;
 							//sdk.variable("serviceId", service); 

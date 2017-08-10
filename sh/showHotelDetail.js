@@ -55,8 +55,8 @@ module.exports = {
 			var i=0;
 			while ((!sw)&&(i<savedSearch.length))
 			{		
-				console.log("comparison "+i+" --"+savedSearch[i].name+" "+name);
-				if (savedSearch[i].name==name)
+			//	console.log("comparison "+i+" --"+savedSearch[i].name+" "+name);
+				if (savedSearch[i].name.toUpperCase()==name.toUpperCase())
 				{
 					name=savedSearch[i].id;
 					console.log("saving name as "+name);
@@ -74,7 +74,7 @@ module.exports = {
 			headers: { "Content-Type": "application/json" }
 		};
 		
-	  //    console.log("url: http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase());
+	      console.log("url: http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase());
 		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase(), args,function (data, response) {
 
 	//	console.log("datos detalle del hotel: "+data);
@@ -105,7 +105,7 @@ module.exports = {
 			//sdk.reply({text: "Hotel: "+hotelName});					
 			sdk.reply({text: "Address: "+address+", City: "+city});		
 			var m=0;	
-			
+			var arraybotones=[];
 			for (var i=0;i<rates.length;i++)
 			{
 				
@@ -114,8 +114,9 @@ module.exports = {
 					sdk.reply({text: "Price of: "+rates[i].name+": "+rates[i].price+"€"});	
 					sdk.reply({text: rates[i].description});				
 					//var boton=jdata.id+" "+rates[i].id;		
-					var boton = rates[i].type;
-					sdk.reply({text: "Make reservation "+rates[i].name, choices: boton.split(',')});				
+					arraybotones[i]=rates[i].type;
+					//var boton = rates[i].type;
+					//sdk.reply({text: "Make reservation "+rates[i].name, choices: boton.split(',')});				
 					m++;
 				}
 								  
@@ -124,12 +125,15 @@ module.exports = {
 			if (m==0)
 			{
 				sdk.reply({text: "Ohh I'm sorry. There aren't avaible rooms of type "+roomType});	
+			}else{
+				arraybotones[rates.length]="Search Again";
+				sdk.reply({text: "Make reservation on ", choices: arraybotones});				
 			}
 			 
 			 
 			var j = rates.length;			
-			var botones="Search Again";
-			sdk.reply({text: "or...", choices: botones.split(',')}); 
+		/*	var botones="Search Again";
+			sdk.reply({text: "or...", choices: botones.split(',')}); */
 			var resultadoRates=JSON.stringify(rates);	
 			sdk.variable("ratesResult", resultadoRates); 
 			sdk.variable("user.hotelid", name);
