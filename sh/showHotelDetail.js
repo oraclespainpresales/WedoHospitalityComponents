@@ -104,6 +104,7 @@ module.exports = {
 			sdk.reply({text: "Brand: "+brand+"\nHotel: "+hotelName});	
 			//sdk.reply({text: "Hotel: "+hotelName});					
 			sdk.reply({text: "Address: "+address+", City: "+city});		
+			sdk.reply({img: photos[0]});											
 			var m=0;	
 			var arraybotones=[];
 			for (var i=0;i<rates.length;i++)
@@ -112,7 +113,8 @@ module.exports = {
 				if ((rates[i].type.toUpperCase()==roomType.toUpperCase()) || (roomType.toUpperCase()=='ALL KIND'))
 				{
 					sdk.reply({text: "Price of: "+rates[i].name+": "+rates[i].price+"€"});	
-					sdk.reply({text: rates[i].description});				
+					sdk.reply({text: rates[i].description});
+					sdk.reply({img: rates[i].images[0]});
 					//var boton=jdata.id+" "+rates[i].id;		
 					arraybotones[i]=rates[i].type;
 					//var boton = rates[i].type;

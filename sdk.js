@@ -412,8 +412,25 @@ const ComponentInvocation = class {
      * @param {object|string} payload - payload to be sent back.  payload could also be a string for text response
      */
     reply(payload) {
+		const channelType = this.channelType();
+			////// added: Jesus Brasero to supports imgs on Webhook Websocket
+			if (channelType === 'facebook') {
+				payload: (typeof payload === 'string') ? { text: payload } : payload;
+			}else{				
+				if (payload.hasOwnProperty('img'))
+				{
+					//console.log("es una imagen "+JSON.stringify(payload));
+					payload: (typeof payload === 'string') ? { img: payload } : payload;
+				}else{
+					//console.log("es un text "+JSON.stringify(payload));
+					payload: (typeof payload === 'string') ? { text: payload } : payload;
+				}
+			}
+			////// end added: Jesus Brasero to supports imgs on Webhook Websocket
+			
         var response = {
-          payload: (typeof payload === 'string') ? { text: payload } : payload,
+			payload: payload,
+          //payload: (typeof payload === 'string') ? { text: payload } : payload,
           tenantId: this._request.message.tenantId,
           channelConversation: Object.assign({}, this._request.message.channelConversation)
         };

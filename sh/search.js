@@ -92,6 +92,7 @@ module.exports = {
 						{						
 							botones[i]=jdata[i].name;
 							sdk.reply({text: "Hotel: "+jdata[i].name+"\nLocation: "+ jdata[i].address+" \nPrice from:"+ jdata[i].from.price+"€ "});
+							sdk.reply({img: jdata[i].images[0]});
 							//sdk.reply({text: jdata[i].description});
 						}
 						var j = jdata.length;
