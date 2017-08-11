@@ -8,6 +8,7 @@ module.exports = {
   'registerBooking' : require('./sh/registerBooking'),
   'newcustomer' : require('./sh/newcustomer'),
   'payment' : require('./sh/payment'),
+  'showPaymentMethod' : require('./sh/showPaymentMethod'),
   
   //Smart Hospitality - Pre-checking Flow
   'precheckinflow' : require('./sh/precheckinflow'),
@@ -33,6 +34,7 @@ module.exports = {
   //Smart Hospitality - Checkout Flow
   'checkout' : require('./sh/checkout'),
   'saveFeedback' : require('./sh/saveFeedback'),
+  'invoiceConfirmed' : require('./sh/invoiceConfirmed'),
   
   //Helper
   'assignVariable' : require('./sh/assignVariable'),

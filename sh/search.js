@@ -138,7 +138,7 @@ module.exports = {
 							finalBUttons.push({title: button, payload: 'BACK_SEARCH'});
 						});
 						var uiBuilder = new UIBuilder(sdk.channelType());
-						var payload = uiBuilder.buildButtons("I'm not sure...", finalBUttons);
+						var payload = uiBuilder.buildButtons("Actually, I want to change my query...", finalBUttons);
 						sdk.reply(payload);
 						
 						

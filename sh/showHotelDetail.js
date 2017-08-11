@@ -205,7 +205,7 @@ module.exports = {
 			sdk.reply(rates);
 			
 						
-			var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back","payload":"BACK_HOTELS"}]};
+			var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back "+city+" Hotels","payload":"BACK_HOTELS"}]};
 			sdk.reply(quickreply);
 			
 			
