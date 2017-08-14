@@ -107,7 +107,7 @@ console.log("cuerpo mensaje:: "+JSON.stringify(args));
 		var urlPost="http://new.soa.digitalpracticespain.com:8001/soa-infra/resources/default/BOT_Helper!1.0/BookingRequestService/smarthospitality/booking/request";
 		var corrId = 0;
 		var nextAction ="";
-		client.post(urlPost, args, function (data, response) {
+		var req=client.post(urlPost, args, function (data, response) {
 			console.log("datos en Register"+JSON.stringify(data));	
 			corrId = data.corrId;
 			nextAction = data.nextAction;
@@ -162,6 +162,31 @@ console.log("cuerpo mensaje:: "+JSON.stringify(args));
 		});
 	
 		
+		
+		
+		
+		req.on('requestTimeout', function (req) {
+			console.log('request has expired');
+			req.abort();
+			sdk.action('fail');        
+			sdk.done(true);	
+			done(sdk);
+		});
+		 
+		req.on('responseTimeout', function (res) {
+			console.log('response has expired');
+			sdk.action('fail');        
+			sdk.done(true);	
+			done(sdk);			
+		});
+		
+		//it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts 
+		req.on('error', function (err) {
+			console.log('request error', err);
+			sdk.action('fail');        
+			sdk.done(true);	
+			done(sdk);	
+		});
 		
 	}
 }

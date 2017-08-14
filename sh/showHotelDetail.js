@@ -20,7 +20,8 @@ module.exports = {
         },
         "supportedActions": [
             "success",
-            "fail"
+            "fail",
+			"noHotels"
         ]
     }),
 
@@ -142,10 +143,17 @@ module.exports = {
 			sdk.variable("hotelid", name);			
 			sdk.variable("user.fromDate", inicio);
 			sdk.variable("user.nights",nights);
-			
-			sdk.action('success');        
-			sdk.done(true);	
-			done(sdk);					
+			if (m==0)
+			{
+				sdk.action('noHotels');        
+				sdk.done(true);	
+				done(sdk);
+			}else{
+				sdk.action('success');        
+				sdk.done(true);	
+				done(sdk);					
+			}
+						
 		}else{		
 					
 			sdk.variable("user.hotelid", jdata.id);
@@ -195,25 +203,30 @@ module.exports = {
 			if (m==0)
 			{
 				sdk.reply({text: "Ohh I'm sorry. There aren't avaible rooms of type "+roomType});	
+				sdk.action('noHotels');        
+				sdk.done(true);	
+				done(sdk);
+			}else{
+					var cardv2 = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":carrousel}}};
+					sdk.reply(cardv2);
+					
+					var rates = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":ratescarrousel}}};
+					sdk.reply(rates);
+					
+								
+					var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back "+city+" Hotels","payload":"BACK_HOTELS"}]};
+					sdk.reply(quickreply);
+					
+					
+					sdk.action('success');        
+					sdk.done(true);	
+					done(sdk);	
 			}
 			
 			
-			var cardv2 = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":carrousel}}};
-			sdk.reply(cardv2);
+	
+		  }//end fcbk webhook			
 			
-			var rates = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":ratescarrousel}}};
-			sdk.reply(rates);
-			
-						
-			var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back "+city+" Hotels","payload":"BACK_HOTELS"}]};
-			sdk.reply(quickreply);
-			
-			
-			sdk.action('success');        
-			sdk.done(true);	
-			done(sdk);		
-		}			
-			
-		});
+		}); //end get
 	}
 }

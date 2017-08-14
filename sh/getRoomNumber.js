@@ -81,14 +81,23 @@ module.exports = {
 		req.on('requestTimeout', function (req) {
 			console.log('request has expired');
 			req.abort();
+			sdk.action('fail');        
+			sdk.done(true);	
+			done(sdk);
 		});
 		 
 		req.on('responseTimeout', function (res) {
 			console.log('response has expired');		 
+			sdk.action('fail');        
+			sdk.done(true);	
+			done(sdk);
 		});		
 		
 		req.on('error', function (err) {
 			console.log('request error', err);
+			sdk.action('fail');        
+			sdk.done(true);	
+			done(sdk);
 		});		
 				
 	}

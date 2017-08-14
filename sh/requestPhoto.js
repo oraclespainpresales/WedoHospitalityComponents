@@ -48,16 +48,16 @@ module.exports = {
 		sdk.reply(webui);	
 		
 		
-						var buttons="I'm Finished";
-						buttons = buttons.split(',');
-						var finalBUttons = [];
-						buttons.forEach(function (button) {
-							finalBUttons.push({title: button, payload: button});
-						});
-						
-						var uiBuilder = new UIBuilder(sdk.channelType());
-						var payload = uiBuilder.buildButtons("Let us know when you upload the images.", finalBUttons);
-						sdk.reply(payload);
+		var buttons="I'm Finished";
+		buttons = buttons.split(',');
+		var finalBUttons = [];
+		buttons.forEach(function (button) {
+			finalBUttons.push({title: button, payload: button});
+		});
+		
+		var uiBuilder = new UIBuilder(sdk.channelType());
+		var payload = uiBuilder.buildButtons("Let us know when you upload the images.", finalBUttons);
+		sdk.reply(payload);
 		
 		
 		sdk.action('success');        
