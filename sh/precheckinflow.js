@@ -13,7 +13,8 @@ module.exports = {
         },
         "supportedActions": [
             "success",
-            "fail"
+            "fail",
+			"noBookings"
         ]
     }),
 
@@ -53,7 +54,7 @@ module.exports = {
 				if (nextAction=="NO BOOKINGS")
 				{
 					sdk.reply({text: "I'm sorry, you don't have a booking on our systems. Please make a booking first."});			
-					sdk.action('success');        
+					sdk.action('noBookings');        
 					sdk.done(true);	
 					done(sdk);
 				}else if (nextAction=="ASK FOR PRECHECKING"){					

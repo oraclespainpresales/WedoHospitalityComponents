@@ -46,6 +46,7 @@ module.exports = {
 		};
 		
 		
+		console.log("INVOCANDO:::" +"http://new.soa.digitalpracticespain.com/room/"+encodeURIComponent(social));
 		
 		var req=client.get("http://new.soa.digitalpracticespain.com/room/"+encodeURIComponent(social), args,function (data, response) {
 		
