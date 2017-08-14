@@ -44,7 +44,7 @@ module.exports = {
 		var customerId = sdk.variable('documentnumber');
 		var demoZone = sdk.variable('citySelect');
 		
-		var webui = {"attachment":{"type":"template","payload":{"template_type":"button","text":"Please, upload mandatory images","buttons": [{"type":"web_url","url":"https://e7e125e6.ngrok.io/upload?user="+customerId+"&corrId="+corrId+"&demozone="+demoZone,"title":"Upload ","webview_height_ratio":"tall", "webview_share_button":"hide"}]}}};
+		var webui = {"attachment":{"type":"template","payload":{"template_type":"button","text":"Please, upload mandatory images","buttons": [{"type":"web_url","url":"https://fcbkuploader.ngrok.io/upload?user="+customerId+"&corrId="+corrId+"&demozone="+demoZone,"title":"Upload ","webview_height_ratio":"tall", "webview_share_button":"hide"}]}}};
 		sdk.reply(webui);	
 		
 		
