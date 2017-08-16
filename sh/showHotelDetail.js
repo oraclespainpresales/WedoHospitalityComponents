@@ -101,129 +101,151 @@ module.exports = {
 		
 		
 		if (canal=='webhook')
-		{		
-			sdk.reply({text: "Brand: "+brand+"\nHotel: "+hotelName});	
-			//sdk.reply({text: "Hotel: "+hotelName});					
-			sdk.reply({text: "Address: "+address+", City: "+city});		
-			sdk.reply({img: photos[0]});											
-			var m=0;	
-			var arraybotones=[];
-			for (var i=0;i<rates.length;i++)
+		{	
+			if (jdata.hasOwnProperty('id'))
 			{
-				
-				if ((rates[i].type.toUpperCase()==roomType.toUpperCase()) || (roomType.toUpperCase()=='ALL KIND'))
+				sdk.reply({text: "Brand: "+brand+"\nHotel: "+hotelName});	
+				//sdk.reply({text: "Hotel: "+hotelName});					
+				sdk.reply({text: "Address: "+address+", City: "+city});		
+				sdk.reply({img: photos[0]});											
+				var m=0;	
+				var arraybotones=[];
+				for (var i=0;i<rates.length;i++)
 				{
-					sdk.reply({text: "Price of: "+rates[i].name+": "+rates[i].price+"€"});	
-					sdk.reply({text: rates[i].description});
-					sdk.reply({img: rates[i].images[0]});
-					//var boton=jdata.id+" "+rates[i].id;		
-					arraybotones[i]=rates[i].type;
-					//var boton = rates[i].type;
-					//sdk.reply({text: "Make reservation "+rates[i].name, choices: boton.split(',')});				
-					m++;
-				}
-								  
-			};
-			
-			if (m==0)
-			{
-				sdk.reply({text: "Ohh I'm sorry. There aren't avaible rooms of type "+roomType});	
-			}else{
-				arraybotones[rates.length]="Search Again";
-				sdk.reply({text: "Make reservation on ", choices: arraybotones});				
-			}
-			 
-			 
-			var j = rates.length;			
-		/*	var botones="Search Again";
-			sdk.reply({text: "or...", choices: botones.split(',')}); */
-			var resultadoRates=JSON.stringify(rates);	
-			sdk.variable("ratesResult", resultadoRates); 
-			sdk.variable("user.hotelid", name);
-			sdk.variable("hotelid", name);			
-			sdk.variable("user.fromDate", inicio);
-			sdk.variable("user.nights",nights);
-			if (m==0)
-			{
-				sdk.action('noHotels');        
-				sdk.done(true);	
-				done(sdk);
-			}else{
-				sdk.action('success');        
-				sdk.done(true);	
-				done(sdk);					
-			}
-						
-		}else{		
 					
-			sdk.variable("user.hotelid", jdata.id);
-			sdk.variable("hotelid", jdata.id);
-			sdk.variable("user.fromDate", inicio);
-			sdk.variable("user.nights", nights);
-			sdk.reply({text: "Brand: "+brand});	
-			sdk.reply({text: "Hotel: "+hotelName});					
-			sdk.reply({text: "Address: "+address+", City: "+city});		
-			
-			var carrousel = [];
-			for (var i=0;i<photos.length;i++)
-			{
-				carrousel[i]={
-					"title":"Photo "+i,
-					"subtitle":"",
-					"image_url": photos[i]
-				  };
-			} 
-			
-			
-			var ratescarrousel = [];	
-			var m=0;			
-			for (var i=0;i<rates.length;i++)
-			{
+					if ((rates[i].type.toUpperCase()==roomType.toUpperCase()) || (roomType.toUpperCase()=='ALL KIND'))
+					{
+						sdk.reply({text: "Price of: "+rates[i].name+": "+rates[i].price+"€"});	
+						sdk.reply({text: rates[i].description});
+						sdk.reply({img: rates[i].images[0]});
+						//var boton=jdata.id+" "+rates[i].id;		
+						arraybotones[i]=rates[i].type;
+						//var boton = rates[i].type;
+						//sdk.reply({text: "Make reservation "+rates[i].name, choices: boton.split(',')});				
+						m++;
+					}
+									  
+				};
 				
-				if ((rates[i].type.toUpperCase()==roomType.toUpperCase()) || (roomType.toUpperCase()=='ALL KIND'))
+				if (m==0)
 				{
-				
-					ratescarrousel[m]={
-						"title":rates[i].name+", "+rates[i].price+"€",
-						"subtitle":rates[i].description,
-						"image_url": rates[i].images[0],
-						"buttons":[
-									  {
-										"type":"postback",
-										"title":"Book Room",
-										"payload":jdata.id+" "+rates[i].id
-									  }
-									]
-					};
-					m++;
+					sdk.reply({text: "Ohh I'm sorry. There aren't avaible rooms of type "+roomType});	
+				}else{
+					arraybotones[rates.length]="Search Again";
+					sdk.reply({text: "Make reservation on ", choices: arraybotones});				
 				}
-				//console.log(rates[i].id+" "+jdata.id);
-			}  
-			
-			if (m==0)
-			{
-				sdk.reply({text: "Ohh I'm sorry. There aren't avaible rooms of type "+roomType});	
-				sdk.action('noHotels');        
-				sdk.done(true);	
-				done(sdk);
-			}else{
-					var cardv2 = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":carrousel}}};
-					sdk.reply(cardv2);
-					
-					var rates = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":ratescarrousel}}};
-					sdk.reply(rates);
-					
-								
-					var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back "+city+" Hotels","payload":"BACK_HOTELS"}]};
-					sdk.reply(quickreply);
-					
-					
+				 
+				 
+				var j = rates.length;			
+			/*	var botones="Search Again";
+				sdk.reply({text: "or...", choices: botones.split(',')}); */
+				var resultadoRates=JSON.stringify(rates);	
+				sdk.variable("ratesResult", resultadoRates); 
+				sdk.variable("user.hotelid", name);
+				sdk.variable("hotelid", name);			
+				sdk.variable("user.fromDate", inicio);
+				sdk.variable("user.nights",nights);
+				if (m==0)
+				{
+					sdk.action('noHotels');        
+					sdk.done(true);	
+					done(sdk);
+				}else{
 					sdk.action('success');        
 					sdk.done(true);	
-					done(sdk);	
+					done(sdk);					
+				}
+			}else{
+						var arraybotones=[];
+						arraybotones[0]="Search Again";
+						sdk.reply({text: "Ohh I'm sorry, "+text+" doesn't exists!", choices: arraybotones});	
+						sdk.action('success');        
+						sdk.done(true);	
+						done(sdk);		
 			}
+
 			
+		}else{		
+			//fcbck channel
+			if (jdata.hasOwnProperty('id'))
+			{
 			
+				sdk.variable("user.hotelid", jdata.id);
+				sdk.variable("hotelid", jdata.id);
+				sdk.variable("user.fromDate", inicio);
+				sdk.variable("user.nights", nights);
+				sdk.reply({text: "Brand: "+brand});	
+				sdk.reply({text: "Hotel: "+hotelName});					
+				sdk.reply({text: "Address: "+address+", City: "+city});		
+				
+				var carrousel = [];
+				for (var i=0;i<photos.length;i++)
+				{
+					carrousel[i]={
+						"title":"Photo "+i,
+						"subtitle":"",
+						"image_url": photos[i]
+					  };
+				} 
+				
+				
+				var ratescarrousel = [];	
+				var m=0;			
+				for (var i=0;i<rates.length;i++)
+				{
+					
+					if ((rates[i].type.toUpperCase()==roomType.toUpperCase()) || (roomType.toUpperCase()=='ALL KIND'))
+					{
+					
+						ratescarrousel[m]={
+							"title":rates[i].name+", "+rates[i].price+"€",
+							"subtitle":rates[i].description,
+							"image_url": rates[i].images[0],
+							"buttons":[
+										  {
+											"type":"postback",
+											"title":"Book Room",
+											"payload":jdata.id+" "+rates[i].id
+										  }
+										]
+						};
+						m++;
+					}
+					//console.log(rates[i].id+" "+jdata.id);
+				}  
+				
+				if (m==0)
+				{
+					sdk.reply({text: "Ohh I'm sorry. There aren't avaible rooms of type "+roomType});	
+					sdk.action('noHotels');        
+					sdk.done(true);	
+					done(sdk);
+				}else{
+						var cardv2 = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":carrousel}}};
+						sdk.reply(cardv2);
+						
+						var rates = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":ratescarrousel}}};
+						sdk.reply(rates);
+						
+									
+						var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back "+city+" Hotels","payload":"BACK_HOTELS"}]};
+						sdk.reply(quickreply);
+						
+						
+						sdk.action('success');        
+						sdk.done(true);	
+						done(sdk);	
+				}
+			
+			}//hasproperty
+			else{
+						sdk.reply({text: "Ohh I'm sorry, "+text+" doesn't exists!"});	
+						var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back "+city+" Hotels","payload":"BACK_HOTELS"}]};
+						sdk.reply(quickreply);
+						sdk.action('success');        
+						sdk.done(true);	
+						done(sdk);		
+			}
 	
 		  }//end fcbk webhook			
 			

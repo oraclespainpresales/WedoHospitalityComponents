@@ -77,10 +77,7 @@ module.exports = {
 				var j=0;				
 				
 			}else{
-				sdk.reply({text: "There are no hotels availables in "+city+" "+roomType});						
-				sdk.action('noHotels');        
-				sdk.done(true);	
-				done(sdk);
+				sdk.reply({text: "There are no hotels availables in "+city+" "+roomType+" room."});									
 			}
 
 				
@@ -88,64 +85,72 @@ module.exports = {
 				sdk.variable("searchResult", resultadoBusqueda);			
 		
 				if (canal=='webhook')
-				{		var botones=[];
-						for (var i=0;i<jdata.length;i++)
-						{						
-							botones[i]=jdata[i].name;
-							sdk.reply({text: "Hotel: "+jdata[i].name+"\nLocation: "+ jdata[i].address+" \nPrice from:"+ jdata[i].from.price+"€ "});
-							sdk.reply({img: jdata[i].images[0]});
-							//sdk.reply({text: jdata[i].description});
-						}
-						var j = jdata.length;
-						botones[j]="Search Again";
-						sdk.reply({text: "Choose an option", choices: botones});
+				{		
 						
-						/*var boton="Or search Again";				
-						sdk.reply({text: "I'm not sure...", choices: boton.split(',')});*/
-						
-						sdk.action('success');        
-						sdk.done(true);	
-						done(sdk);			
+						if (hotelsExists)
+						{	
+							var botones=[];
+							for (var i=0;i<jdata.length;i++)
+							{						
+								botones[i]=jdata[i].name;
+								sdk.reply({text: "Hotel: "+jdata[i].name+"\nLocation: "+ jdata[i].address+" \nPrice from:"+ jdata[i].from.price+"€ "});
+								sdk.reply({img: jdata[i].images[0]});
+								//sdk.reply({text: jdata[i].description});
+							}
+							var j = jdata.length;
+							botones[j]="Search Again";
+							sdk.reply({text: "Choose an option", choices: botones});
+							/*var boton="Or search Again";				
+							sdk.reply({text: "I'm not sure...", choices: boton.split(',')});*/					
+							sdk.action('success');        
+							sdk.done(true);	
+							done(sdk);			
+						}else{
+							sdk.action('noHotels');        
+							sdk.done(true);	
+							done(sdk);
+						}			
 
 				}else{	
-						var carrousel = [];						
-						for (var i=0;i<jdata.length;i++)
-						{
-							carrousel[i]={
-								"title":jdata[i].name,
-								"subtitle":jdata[i].address+" Price from: "+ jdata[i].from.price+"€ ",
-								"image_url": jdata[i].images[0],
-								"buttons":[
-								  {
-									"type":"postback",
-									"title":"Detail "+jdata[i].name,
-									"payload":jdata[i].id
-								  }
-								]
-							  };
-						}  
-					
-						var cardv2 = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":carrousel}}};
-						sdk.reply(cardv2);
+							if (hotelsExists)
+							{	
+							var carrousel = [];						
+							for (var i=0;i<jdata.length;i++)
+							{
+								carrousel[i]={
+									"title":jdata[i].name,
+									"subtitle":jdata[i].address+" Price from: "+ jdata[i].from.price+"€ ",
+									"image_url": jdata[i].images[0],
+									"buttons":[
+									  {
+										"type":"postback",
+										"title":"Detail "+jdata[i].name,
+										"payload":jdata[i].id
+									  }
+									]
+								  };
+							}  
 						
+							var cardv2 = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":carrousel}}};
+							sdk.reply(cardv2);
 						
-						/*var quickreply = {"text":"I'm not sure...","quick_replies":[{"content_type":"text","title":"Search Again","payload":"BACK_SEARCH"}]};
-						sdk.reply(quickreply);*/
-						
-						var buttons="Search Again";
-						buttons = buttons.split(',');
-						var finalBUttons = [];
-						buttons.forEach(function (button) {
-							finalBUttons.push({title: button, payload: 'BACK_SEARCH'});
-						});
-						var uiBuilder = new UIBuilder(sdk.channelType());
-						var payload = uiBuilder.buildButtons("Actually, I want to change my query...", finalBUttons);
-						sdk.reply(payload);
-						
-						
-						sdk.action('success');        
-						sdk.done(true);	
-						done(sdk);			
+							var buttons="Search Again";
+							buttons = buttons.split(',');
+							var finalBUttons = [];
+							buttons.forEach(function (button) {
+								finalBUttons.push({title: button, payload: 'BACK_SEARCH'});
+							});
+							var uiBuilder = new UIBuilder(sdk.channelType());
+							var payload = uiBuilder.buildButtons("Actually, I want to change my query...", finalBUttons);
+							sdk.reply(payload);					
+							sdk.action('success');        
+							sdk.done(true);	
+							done(sdk);			
+						}else{
+							sdk.action('noHotels');        
+							sdk.done(true);	
+							done(sdk);
+						}
 					
 				}	
 		});
