@@ -35,6 +35,7 @@ module.exports = {
   'checkout' : require('./sh/checkout'),
   'saveFeedback' : require('./sh/saveFeedback'),
   'invoiceConfirmed' : require('./sh/invoiceConfirmed'),
+  'feedbackQuestion' : require('./sh/feedbackQuestion'),
   
   //Helper
   'assignVariable' : require('./sh/assignVariable'),

@@ -7,9 +7,10 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "invoiceConfirmed",
+        "name": "feedbackQuestion",
         "properties": {
-			"tipo": { "type": "string", "required": true}
+			"text": { "type": "string", "required": true},
+			"var": { "type": "number", "required": true}
         },
         "supportedActions": [
             "success",
@@ -19,14 +20,15 @@ module.exports = {
 
     invoke: (sdk, done) => {
         const text = sdk.text();		  
-        logger.info('invoiceConfirmed');
+        logger.info('feedbackQuestion');
+		var question =  sdk.properties().text;
         
 		
 		var canal="";					
 		if (sdk.channelType() == "facebook") {
 			console.log("es FACEBOOK");
-			canal="facebook";			
-			var buttons="Yes,No";
+			canal="facebook";
+			var buttons="5,4,3,2,1";
 			buttons = buttons.split(',');
 			var finalBUttons = [];
 			buttons.forEach(function (button) {
@@ -34,18 +36,18 @@ module.exports = {
 			});
 			
 			var uiBuilder = new UIBuilder(sdk.channelType());
-			var payload = uiBuilder.buildButtons("Would you mind giving us some feedback so that we can do better for you??", finalBUttons);
-			sdk.reply(payload);
+			var payload = uiBuilder.buildButtons(question, finalBUttons);
+			sdk.reply(payload);			
 		}
 		else {
 			console.log("es WEBHOOK");
-			canal="webhook";
-			var botones="Yes,No";
-			sdk.reply({text: "Would you mind giving us some feedback so that we can do better for you??", choices: botones.split(',')});
+			canal="webhook";		
+			//sdk.reply({text: "feedbackQuestion..."});			
+			var botones="5,4,3,2,1";
+			sdk.reply({text: question, choices: botones.split(',')});
 		}
 		
-	//	sdk.reply({text: "invoiceConfirmed..."});			
-	//	sdk.reply({text: "Did you enjoy your stay here? Please, provide a feedback."});			
+		
 		sdk.action('success');        
 		sdk.done(true);	
 		done(sdk);

@@ -55,12 +55,12 @@ module.exports = {
 				if (nextAction=="ASK FOR ROOM NUMBER")
 				{
 					sdk.reply({text: "We will do our best to satisfy your wishes. Your prechecking request is under review, we will get back to you as soon as possible. Thanks!"});			
-				//	sdk.action('success');        
+					sdk.action('success');        
 					sdk.done(true);	
 					done(sdk);
 				}else{
 					sdk.reply({text: "There was an error saving your comments. Please try again later..."});		
-				//	sdk.action('fail');        
+					sdk.action('fail');        
 					sdk.done(true);	
 					done(sdk);
 				}
