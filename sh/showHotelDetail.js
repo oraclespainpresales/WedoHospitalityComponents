@@ -51,12 +51,12 @@ module.exports = {
 			console.log("es WEBHOOK");
 			canal="webhook";
 			savedSearch=  JSON.parse(sdk.properties().searchResult);
-			//console.log("savedSearch: "+savedSearch);
+			console.log("savedSearch: "+savedSearch);
 			var sw=false;
 			var i=0;
 			while ((!sw)&&(i<savedSearch.length))
 			{		
-			//	console.log("comparison "+i+" --"+savedSearch[i].name+" "+name);
+				console.log("comparison "+i+" --"+savedSearch[i].name+" "+name);
 				if (savedSearch[i].name.toUpperCase()==name.toUpperCase())
 				{
 					name=savedSearch[i].id;
