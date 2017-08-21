@@ -36,7 +36,7 @@ module.exports = {
 		
 		if (canal=="facebook")
 		{
-			var social1 = sdk.variable('profile.firstName');
+			//var social1 = sdk.variable('profile.firstName');
 			var social2 = sdk.variable('profile.lastName');		
 			var social = social1+social2;		
 			var Client = require('node-rest-client').Client;
@@ -44,9 +44,12 @@ module.exports = {
 			var args = {				
 				headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};
-			var urlPost="http://new.soa.digitalpracticespain.com:8001/soa-infra/resources/default/BOT_Helper!1.0/CheckOutRequestService/"+social;		
+			
+			var urlPost="http://new.soa.digitalpracticespain.com:8001/soa-infra/resources/default/BOT_Helper!1.0/CheckOutRequestService/"+encodeURIComponent(social);		
+			//console.log("url "+urlPost);
+			
 			var req=client.post(urlPost, function (data, response) {
-				//	console.log("fin del post "+JSON.stringify(data));			
+			//	console.log("fin del post "+JSON.stringify(data));			
 				sdk.reply({text: "This is your receipt:"});					
 										
 				var elementos=[];		
@@ -81,8 +84,23 @@ module.exports = {
 				var timeseconds = Math.round(+new Date()/1000);	
 				var	taxes = Math.round((amountToPay * 0.21));
 				var withoutTaxes=Math.round(amountToPay -taxes);
+				var receipt = "";
+				var satisfaction = data.booking.satisfaction;
+			//	satisfaction = 1;
+				if (satisfaction==-1)
+				{
+					receipt = {"attachment":{"type":"template","payload":{"template_type":"receipt","recipient_name":data.customer.name+" "+data.customer.surname,"order_number":data.booking.bookingid.toString(),"currency":"EUR","payment_method":"Visa 2345", "order_url":data.hotel.hotelimage,"timestamp":timeseconds.toString(),"elements":elementos,"address":{"street_1":data.customer.address,"street_2":" ",  "city":"-", "postal_code":"-","state":data.customer.country,"country":data.customer.country},"summary":{"subtotal":withoutTaxes,"shipping_cost":0,"total_tax":taxes,"total_cost":amountToPay}}}}	
+				}else{
+					 amountToPay=amountToPay-10;					 
+					 taxes = Math.round((amountToPay * 0.21));
+					 withoutTaxes=Math.round(amountToPay -taxes);
+					 receipt = {"attachment":{"type":"template","payload":{"template_type":"receipt","recipient_name":data.customer.name+" "+data.customer.surname,"order_number":data.booking.bookingid.toString(),"currency":"EUR","payment_method":"Visa 2345", "order_url":data.hotel.hotelimage,"timestamp":timeseconds.toString(),"elements":elementos,"address":{"street_1":data.customer.address,"street_2":" ",  "city":"-", "postal_code":"-","state":data.customer.country,"country":data.customer.country},"summary":{"subtotal":withoutTaxes,"shipping_cost":0,"total_tax":taxes,"total_cost":amountToPay}, "adjustments":[{ "name":"$10 Off Coupon", "amount":10 }]}}}
+				}
 				
-				var receipt = {"attachment":{"type":"template","payload":{"template_type":"receipt","recipient_name":data.customer.name+" "+data.customer.surname,"order_number":data.booking.bookingid.toString(),"currency":"EUR","payment_method":"Visa 2345", "order_url":data.hotel.hotelimage,"timestamp":timeseconds.toString(),"elements":elementos,"address":{"street_1":data.customer.address,"street_2":" ",  "city":"-", "postal_code":"-","state":data.customer.country,"country":data.customer.country},"summary":{"subtotal":withoutTaxes,"shipping_cost":0,"total_tax":taxes,"total_cost":amountToPay}}}}
+				
+				
+				
+				
 				//, "adjustments":[{"name":"New Customer Discount","amount":1}, { "name":"$10 Off Coupon", "amount":1 }]
 				//console.log("recibo: "+JSON.stringify(receipt));
 				sdk.reply(receipt);
