@@ -24,6 +24,7 @@ module.exports = {
         const text = sdk.text();
 		var service = sdk.properties().service;
 		var when = sdk.properties().when;
+		//console.log("when::: "+when);
 		var payment = sdk.properties().payment;
 		var social1 = sdk.variable('profile.firstName');
 		var social2 = sdk.variable('profile.lastName');		

@@ -37,6 +37,9 @@ module.exports = {
   'invoiceConfirmed' : require('./sh/invoiceConfirmed'),
   'feedbackQuestion' : require('./sh/feedbackQuestion'),
   
+   //Smart Hospitality - ASK WeDo Points
+  'getWedoPoints' : require('./sh/getWedoPoints'),
+  
   //Helper
   'assignVariable' : require('./sh/assignVariable'),
   'conditionFromLastMessage' : require('./sh/conditionFromLastMessage')  
