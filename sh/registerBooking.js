@@ -79,7 +79,7 @@ module.exports = {
 				//console.log("selection: "+hotelid+" "+rateid);
 				var social=social1+social2;
 				//console.log("selection: "+hotelid.indexOf('SH')+" "+rateid.indexOf('SH'));
-				if ((hotelid.indexOf('SH')==0)&&(rateid.indexOf('SH')==0))
+				if (((hotelid.indexOf('SH')==0)&&(rateid.indexOf('SH')==0))||((hotelid.indexOf('CORE')==0)&&(rateid.indexOf('SH')==0)))
 				{
 					console.log("lo hizo bien "+seleccion);
 				}else{
