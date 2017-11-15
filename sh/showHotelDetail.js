@@ -75,8 +75,10 @@ module.exports = {
 			headers: { "Content-Type": "application/json" }
 		};
 		
-	      console.log("url: http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase());
-		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase(), args,function (data, response) {
+	 //     console.log("url: http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase());
+	//	var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+city+"/"+name.toLowerCase(), args,     
+	console.log("url: http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+encodeURIComponent(city)+"/"+name.toLowerCase());
+		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/offers/MADRID/"+encodeURIComponent(city)+"/"+name.toLowerCase(), args,function (data, response) {
 
 	//	console.log("datos detalle del hotel: "+data);
 		//console.log("datos detalle del hotel: "+JSON.stringify(data));

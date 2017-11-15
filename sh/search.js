@@ -58,7 +58,7 @@ module.exports = {
 			headers: { "Content-Type": "application/json" }
 		};
 		
-		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/hotels/MADRID/"+city, args,function (data, response) {
+		var req=client.get("http://new.soa.digitalpracticespain.com:8001/smarthospitality/hotels/MADRID/"+encodeURIComponent(city), args,function (data, response) {
 			var jdata=data;
 			var nhotels=0;			
 			if (jdata.length>0)
