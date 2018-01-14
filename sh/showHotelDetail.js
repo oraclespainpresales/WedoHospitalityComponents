@@ -3,11 +3,12 @@
 var log4js = require('log4js');
 var logger = log4js.getLogger();
 //var moment = require('moment');
+var UIBuilder = require('./UIBuilder');
 
 module.exports = {
 
     metadata: () => ({
-        "name": "showHotelDetail",
+        "name": "hospitality.showHotelDetail",
         "properties": {  
             "city": { "type": "string", "required": true },
 			"name": { "type": "string", "required": true },
@@ -229,9 +230,18 @@ module.exports = {
 						var rates = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":ratescarrousel}}};
 						sdk.reply(rates);
 						
-									
+					/*				
 						var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back "+city+" Hotels","payload":"BACK_HOTELS"}]};
-						sdk.reply(quickreply);
+						sdk.reply(quickreply);*/
+							var buttons="Search Again";
+							buttons = buttons.split(',');
+							var finalBUttons = [];
+							buttons.forEach(function (button) {
+								finalBUttons.push({title: button, payload: 'BACK_SEARCH'});
+							});
+							var uiBuilder = new UIBuilder(sdk.channelType());
+							var payload = uiBuilder.buildButtons("Actually, I want to change my query...", finalBUttons);
+							sdk.reply(payload);	
 						
 						
 						sdk.action('success');        
