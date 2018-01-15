@@ -2,12 +2,12 @@
 
 var log4js = require('log4js');
 var logger = log4js.getLogger();
-
+var UIBuilder = require('./UIBuilder');
 
 module.exports = {
 
     metadata: () => ({
-        "name": "getAllAvailableServices",
+        "name": "hospitality.getAllAvailableServices",
         "properties": {  
             "selectedService": { "type": "string", "required": true }
         },
@@ -107,8 +107,20 @@ module.exports = {
 							sdk.reply(cardv2);
 							
 							
-							var quickreply = {"text":"ouw!! i'm not sure, let me come back later!","quick_replies":[{"content_type":"text","title":"Not Order","payload":"BACK_SEARCH"}]};
-							sdk.reply(quickreply);
+							/*var quickreply = {"text":"ouw!! i'm not sure, let me come back later!","quick_replies":[{"content_type":"text","title":"Not Order","payload":"BACK_SEARCH"}]};
+							sdk.reply(quickreply);*/
+							
+							var buttons="Not Order now";
+							buttons = buttons.split(',');
+							var finalBUttons = [];
+							buttons.forEach(function (button) {
+								finalBUttons.push({title: button, payload: 'BACK_SEARCH'});
+							});
+							var uiBuilder = new UIBuilder(sdk.channelType());
+							var payload = uiBuilder.buildButtons("ouw!! i'm not sure, let me come back later!!", finalBUttons);
+							sdk.reply(payload);	
+							
+							
 							sdk.action('success');        
 							sdk.done(true);	
 							done(sdk);						

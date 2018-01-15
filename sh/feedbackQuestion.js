@@ -7,7 +7,7 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "feedbackQuestion",
+        "name": "hospitality.feedbackQuestion",
         "properties": {
 			"text": { "type": "string", "required": true},
 			"var": { "type": "number", "required": true}
@@ -29,15 +29,18 @@ module.exports = {
 			console.log("es FACEBOOK");
 			canal="facebook";
 			var buttons="5,4,3,2,1";
-			buttons = buttons.split(',');
+			var buttons1 = buttons.split(',');
 			var finalBUttons = [];
-			buttons.forEach(function (button) {
+			buttons1.forEach(function (button) {
 				finalBUttons.push({title: button, payload: button});
 			});
 			
 			var uiBuilder = new UIBuilder(sdk.channelType());
 			var payload = uiBuilder.buildButtons(question, finalBUttons);
-			sdk.reply(payload);			
+			sdk.reply(payload);		
+			sdk.action('success');        
+			sdk.done(true);	
+			done(sdk);			
 		}
 		else {
 			console.log("es WEBHOOK");
@@ -45,12 +48,13 @@ module.exports = {
 			//sdk.reply({text: "feedbackQuestion..."});			
 			var botones="5,4,3,2,1";
 			sdk.reply({text: question, choices: botones.split(',')});
+			sdk.action('success');        
+			sdk.done(true);	
+			done(sdk);
 		}
 		
 		
-		sdk.action('success');        
-		sdk.done(true);	
-		done(sdk);
+
 	}
 			
 //	}

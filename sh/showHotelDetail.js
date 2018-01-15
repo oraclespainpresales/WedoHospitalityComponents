@@ -233,14 +233,14 @@ module.exports = {
 					/*				
 						var quickreply = {"text":"Show me the hotels again...","quick_replies":[{"content_type":"text","title":"Back "+city+" Hotels","payload":"BACK_HOTELS"}]};
 						sdk.reply(quickreply);*/
-							var buttons="Search Again";
+							var buttons="Back "+city+" Hotels";
 							buttons = buttons.split(',');
 							var finalBUttons = [];
 							buttons.forEach(function (button) {
-								finalBUttons.push({title: button, payload: 'BACK_SEARCH'});
+								finalBUttons.push({title: button, payload: 'BACK_HOTELS'});
 							});
 							var uiBuilder = new UIBuilder(sdk.channelType());
-							var payload = uiBuilder.buildButtons("Actually, I want to change my query...", finalBUttons);
+							var payload = uiBuilder.buildButtons("Show me the hotels again...", finalBUttons);
 							sdk.reply(payload);	
 						
 						
