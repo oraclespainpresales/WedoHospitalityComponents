@@ -8,7 +8,7 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "search",
+        "name": "hospitality.search",
         "properties": {  
             "city": { "type": "string", "required": true },		
             "room": { "type": "string", "required": true }		
@@ -132,6 +132,7 @@ module.exports = {
 							}  
 						
 							var cardv2 = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":carrousel}}};
+							console.log("formato de plantilla :::::::::: "+JSON.stringify(cardv2));
 							sdk.reply(cardv2);
 						
 							var buttons="Search Again";

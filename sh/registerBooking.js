@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "registerBooking",
+        "name": "hospitality.registerBooking",
         "properties": {
             "city": { "type": "string", "required": true },
 			"name": { "type": "string", "required": true },
@@ -15,7 +15,8 @@ module.exports = {
 			"from": { "type": "date", "required": true },
 			"nights": { "type": "Integer", "required": true },
 			"hotelid": { "type": "string", "required": true },
-			"ratesResult": { "type": "string", "required": true }
+			"ratesResult": { "type": "string", "required": true },
+			"legacy": { "type": "boolean", "required": true }
         },
         "supportedActions": [
             "askcustomerdata",
@@ -35,6 +36,7 @@ module.exports = {
 		var city = sdk.properties().city.toUpperCase();  
 		var roomType =sdk.properties().room.toUpperCase();  
 		var nroom =sdk.properties().nroom;  
+		var legacy = sdk.properties().legacy;
 		var indice = sdk.properties().from.indexOf(",");
 		let fromdate = sdk.properties().from.substring(6, indice);		
 		var nfromdate = require('date-from-num');
@@ -79,7 +81,7 @@ module.exports = {
 				//console.log("selection: "+hotelid+" "+rateid);
 				var social=social1+social2;
 				//console.log("selection: "+hotelid.indexOf('SH')+" "+rateid.indexOf('SH'));
-				if (((hotelid.indexOf('SH')==0)&&(rateid.indexOf('SH')==0))||((hotelid.indexOf('CORE')==0)&&(rateid.indexOf('SH')==0)))
+				if (((hotelid.indexOf('SH')==0)&&(rateid.indexOf('SH')==0))||((hotelid.indexOf('CORE')==0)&&(rateid.indexOf('SH')==0))||(hotelid.indexOf('DLHRS1')==0))
 				{
 					console.log("lo hizo bien "+seleccion);
 				}else{
@@ -120,15 +122,15 @@ module.exports = {
 		var Client = require('node-rest-client').Client;
 		var client = new Client();		
 		var args = {
-			data: {"DEMOZONE":city, "SOCIALID":social, "HOTELID" : hotelid, "OFFERID" : rateid, "checkin" : realfromdate, "checkout" : todate, "rooms" : nroom, "comments" : "not defined yet"},
+			data: {"DEMOZONE":city, "SOCIALID":social, "HOTELID" : hotelid, "OFFERID" : rateid, "checkin" : realfromdate, "checkout" : todate, "rooms" : nroom, "comments" : "not defined yet", "legacy" : legacy},
 			headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};
-//console.log("cuerpo mensaje:: "+JSON.stringify(args));				
+console.log("cuerpo mensaje:: "+JSON.stringify(args));				
 		var urlPost="http://new.soa.digitalpracticespain.com:8001/soa-infra/resources/default/BOT_Helper!1.0/BookingRequestService/smarthospitality/booking/request";
 		var corrId = 0;
 		var nextAction ="";
 		var req=client.post(urlPost, args, function (data, response) {
-		//	console.log("datos en Register"+JSON.stringify(data));	
+			console.log("datos en Register"+JSON.stringify(data));	
 			corrId = data.corrId;
 			nextAction = data.nextAction;
 		//	console.log("registerBooking en hotel::"+ hotelid +" y rate:: "+rateid);	
