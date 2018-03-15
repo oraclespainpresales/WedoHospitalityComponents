@@ -2,9 +2,7 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
-var morgan = require('morgan');
 var auth = require('http-auth');
-
 
 let samplesAdminUser = process.env.BOTS_SAMPLES_USER || 'MyTestUser';
 let samplesAdminPwd = process.env.BOTS_SAMPLES_PASSWORD || 'MyTestPassword';
@@ -17,24 +15,20 @@ const basic = auth.basic({
 
 var createComponentsServer = function(urlPath, config) {
     var app = express();
-    app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
 
 		var logger = (config ? config.logger : null);
 	  if (!logger) {
-	    const log4js = require('log4js');
-	    logger = log4js.getLogger();
-	    logger.setLevel('INFO');
-	    log4js.replaceConsole(logger);
+	    logger = console;
+			logger.info("components.js create console logger");
 	  }
-		if (config){
-			config.logger = logger;			
-		}
+		config = config || {};
+		config.logger = logger;
 
-		var shell = require('./shell')(config);
+		var shell = require('./shell')();
+		//var shell = require('./shell')(config);
 
     var router = express.Router();
-    router.use(morgan('combined'));
     router.use(auth.connect(basic));
 
     // Return component metadata
@@ -47,7 +41,7 @@ var createComponentsServer = function(urlPath, config) {
     // Invoke component by name
     router.route('/:componentName').post(function (req, res) {
         const componentName = req.params.componentName;
-        shell.invokeComponentByName(req.params.componentName, req.body, {}, function(err, data) {
+        shell.invokeComponentByName(componentName, req.body, {}, function(err, data) {
             if (!err) {
                 res.status(200).json(data);
             }
