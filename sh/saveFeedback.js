@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "saveFeedback",
+        "name": "hospitality.saveFeedback",
         "properties": {
 			"text": { "type": "string", "required": true},
 			"ask1": { "type": "string", "required": true},

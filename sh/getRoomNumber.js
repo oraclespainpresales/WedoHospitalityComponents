@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "getRoomNumber",
+        "name": "hospitality.getRoomNumber",
         "properties": {
 			"corrId": { "type": "Integer", "required": true }
         },

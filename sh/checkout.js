@@ -7,7 +7,7 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "checkout",
+        "name": "hospitality.checkout",
         "properties": {
 			"customerId": { "type": "string", "required": true }
         },
@@ -106,7 +106,7 @@ module.exports = {
 				sdk.reply(receipt);
 				//sdk.reply({text: "It's correct?"});			
 				//sdk.reply({text: social1 +", did you enjoy your stay here?"});			
-				var buttons="Yes,No";
+			/*	var buttons="Yes,No";
 				buttons = buttons.split(',');
 				var finalBUttons = [];
 				buttons.forEach(function (button) {
@@ -115,8 +115,8 @@ module.exports = {
 				
 				var uiBuilder = new UIBuilder(sdk.channelType());
 				var payload = uiBuilder.buildButtons("It's correct?", finalBUttons);
-				sdk.reply(payload);				
-							
+				sdk.reply(payload);				*/
+				sdk.keepTurn('true');			
 				sdk.action('success');        
 				sdk.done(true);	
 				done(sdk);			

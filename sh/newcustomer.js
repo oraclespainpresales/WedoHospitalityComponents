@@ -7,7 +7,7 @@ var FBMessenger = require('fb-messenger');
 module.exports = {
 
     metadata: () => ({
-        "name": "newcustomer",
+        "name": "hospitality.newcustomer",
         "properties": {  
             "name": { "type": "string", "required": true },		
             "surname": { "type": "string", "required": true },		
@@ -21,7 +21,8 @@ module.exports = {
             "ccexpiration": { "type": "string", "required": true },		
             "ccccv": { "type": "string", "required": true },
 			"customermobile" : { "type": "string", "required": true },
-			"customeremail" : { "type": "string", "required": true }
+			"customeremail" : { "type": "string", "required": true },
+			"senderid" : { "type": "string", "required": true }			
         },
         "supportedActions": [
             "askpaymentmode",
@@ -55,8 +56,11 @@ module.exports = {
 		console.log("payload: "+JSON.stringify(sdk.payload()));
 		if (sdk.channelType() == "facebook") {
 			console.log("es FACEBOOK");
-			canal="facebook";			
-			sender=sdk.payload().sender.id;
+			canal="facebook";					
+			//console.log("payload: "+JSON.stringify(sdk.payload().sender.id));
+			//sender=sdk.payload().sender.id;
+			sender=sdk.properties().senderid;
+			console.log("payload sender::"+sender);
 			var social1 = sdk.variable('profile.firstName');
 			var social2 = sdk.variable('profile.lastName');
 		}

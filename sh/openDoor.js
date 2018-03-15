@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "openDoor",
+        "name": "hospitality.openDoor",
         "properties": {
 			"customerId": { "type": "string", "required": true }
         },

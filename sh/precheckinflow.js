@@ -7,7 +7,7 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "precheckinflow",
+        "name": "hospitality.precheckinflow",
         "properties": {
 			"tipo": { "type": "string", "required": true }
         },
@@ -106,6 +106,7 @@ module.exports = {
 					});
 				}else{
 					sdk.reply({text: "There was an error and you have a big problem LOL"});		
+					sdk.keepTurn('true');
 					sdk.action('fail');        
 					sdk.done(true);	
 					done(sdk);

@@ -78,7 +78,7 @@ module.exports = {
 				var seleccion = text.split(' ');
 				hotelid = seleccion[0];
 				rateid = seleccion[1];	
-				//console.log("selection: "+hotelid+" "+rateid);
+				console.log("selection: "+hotelid+" "+rateid);
 				var social=social1+social2;
 				//console.log("selection: "+hotelid.indexOf('SH')+" "+rateid.indexOf('SH'));
 				if (((hotelid.indexOf('SH')==0)&&(rateid.indexOf('SH')==0))||((hotelid.indexOf('CORE')==0)&&(rateid.indexOf('SH')==0))||(hotelid.indexOf('DLHRS1')==0))
@@ -125,7 +125,7 @@ module.exports = {
 			data: {"DEMOZONE":city, "SOCIALID":social, "HOTELID" : hotelid, "OFFERID" : rateid, "checkin" : realfromdate, "checkout" : todate, "rooms" : nroom, "comments" : "not defined yet", "legacy" : legacy},
 			headers: { "Content-Type": "application/json", "Accept": "application/json"}
 			};
-console.log("cuerpo mensaje:: "+JSON.stringify(args));				
+console.log("---------------------\n\n-----------------cuerpo mensaje:: "+JSON.stringify(args));				
 		var urlPost="http://new.soa.digitalpracticespain.com:8001/soa-infra/resources/default/BOT_Helper!1.0/BookingRequestService/smarthospitality/booking/request";
 		var corrId = 0;
 		var nextAction ="";

@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "updateSocialID",
+        "name": "hospitality.updateSocialID",
         "properties": {	
 			"tipo": { "type": "string", "required": true }		
         },

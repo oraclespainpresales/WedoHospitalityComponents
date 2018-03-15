@@ -6,14 +6,15 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "payment",
+        "name": "hospitality.payment",
         "properties": {              
             "corrId": { "type": "Integer", "required": true },		
             "ccnumber": { "type": "string", "required": true },		
             "ccexpiration": { "type": "string", "required": true },		            
             "ccccv": { "type": "string", "required": true },
 			"paypalusername" : { "type": "string", "required": true },
-			"paymentmode" : { "type": "string", "required": true }
+			"paymentmode" : { "type": "string", "required": true },
+			"legacy": { "type": "boolean", "required": true }
         },
         "supportedActions": [
             "success",
@@ -36,6 +37,7 @@ module.exports = {
 		var ccccv = sdk.properties().ccccv;
 		var paypalusername = sdk.properties().paypalusername;	
 		var paymentmode = sdk.properties().paymentmode;	
+		var legacy = sdk.properties().legacy;
 		var nextAction ="";
 		var canal="";		
 
@@ -69,8 +71,13 @@ module.exports = {
 			var checkin = data.checkin;
 			var checkout = data.checkout;
 			var rooms = data.rooms;		
-			//there was an error
-			sdk.reply({text: "Booked sucessfully, reservation code: "+bookingId});
+			if (legacy){	
+				sdk.reply({text: "Booked sucessfully, reservation code: "+bookingId});
+			}else{
+				var operaId = data.operaBookingId;
+				sdk.reply({text: "Booked sucessfully, reservation code: "+bookingId+" and OPERA id: "+operaId});
+			}
+			
 			sdk.action('success'); 
 			sdk.done(true);	
 			done(sdk);

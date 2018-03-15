@@ -25,7 +25,6 @@ module.exports = {
 		var city = sdk.properties().city.toUpperCase();  
 		var roomType = sdk.properties().room.toUpperCase();  
 	    logger.info('searching in '+city+" "+roomType);
-       	   
 	/*	console.log("sender "+sdk.payload().sender.id);
 		console.log("receptor "+sdk.payload().recipient.id);	   
 	   	var messenger = new FBMessenger('EAAFCo0ZB9MN4BAF3DPAT76WwsTeORmYBZCb7cCvVKlDZBqHOVTNHx7ObdYByMQDY5bTnShmjyceZAcqSSSZCtwjgZBeIoVHwOTWuXrFyB48zNWRwndjZAlrTJJVNydqkK7WRHZB5ky0ZBOnlptyXo1ZAIAbBnbUEBuOp57Q5IFZCzDoDwZDZD', 'REGULAR'); 
@@ -43,6 +42,8 @@ module.exports = {
 		if (sdk.channelType() == "facebook") {
 			console.log("es FACEBOOK");
 			canal="facebook";			
+			console.log("payload: "+JSON.stringify(sdk.payload().sender.id));
+			sdk.variable("senderid",sdk.payload().sender.id);
 		}
 		else {
 			console.log("es WEBHOOK");

@@ -7,7 +7,7 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "invoiceConfirmed",
+        "name": "hospitality.invoiceConfirmed",
         "properties": {
 			"tipo": { "type": "string", "required": true}
         },

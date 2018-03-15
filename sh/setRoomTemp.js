@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "setRoomTemp",
+        "name": "hospitality.setRoomTemp",
         "properties": {
 			"customerId": { "type": "string", "required": true },
 			"roomTemp": { "type": "Integer", "required": true }

@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "MakeOrder",
+        "name": "hospitality.MakeOrder",
         "properties": {
 			"service": { "type": "string", "required": true},
 			"serviceId": { "type": "string", "required": true},

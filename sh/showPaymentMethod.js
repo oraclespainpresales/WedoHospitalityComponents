@@ -7,7 +7,7 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "showPaymentMethod",
+        "name": "hospitality.showPaymentMethod",
         "properties": {
 			"options": { "type": "string", "required": true}
         },

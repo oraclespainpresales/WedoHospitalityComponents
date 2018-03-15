@@ -8,7 +8,7 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "requestPhoto",
+        "name": "hospitality.requestPhoto",
         "properties": {
 			"tipo": { "type": "string", "required": true },
 			"corrId": {"type": "Integer", "required": true},

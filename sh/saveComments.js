@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "saveComments",
+        "name": "hospitality.saveComments",
         "properties": {
 			"comment": { "type": "string", "required": true },
 			"corrId": { "type": "Integer", "required": true }

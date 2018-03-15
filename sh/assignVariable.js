@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "assignVariable",
+        "name": "hospitality.assignVariable",
         "properties": {
 			"vari": { "type": "string", "required": true }
         },

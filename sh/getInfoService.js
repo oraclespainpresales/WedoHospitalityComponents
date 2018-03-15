@@ -7,7 +7,7 @@ var UIBuilder = require('./UIBuilder');
 module.exports = {
 
     metadata: () => ({
-        "name": "getInfoService",
+        "name": "hospitality.getInfoService",
         "properties": {
 			"service": { "type": "string", "required": true},
 			"when": { "type": "date", "required": true},

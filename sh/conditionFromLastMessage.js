@@ -6,7 +6,7 @@ var logger = log4js.getLogger();
 module.exports = {
 
     metadata: () => ({
-        "name": "conditionFromLastMessage",
+        "name": "hospitality.conditionFromLastMessage",
         "properties": {
 			"condition": { "type": "string", "required": true }
         },
